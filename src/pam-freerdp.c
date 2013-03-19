@@ -120,6 +120,11 @@ get_item (pam_handle_t * pamh, int type)
 	}
 
 	if (type == PAM_AUTHTOK) {
+                if (strlen(promptval) == 0){
+			free(promptval);
+			return NULL;
+                }
+
 		if (mlock(promptval, strlen(promptval) + 1) != 0) {
 			free(promptval);
 			return NULL;
