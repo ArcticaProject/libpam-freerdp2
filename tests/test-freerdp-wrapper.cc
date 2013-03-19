@@ -58,6 +58,16 @@ namespace {
 	                    // that I got all of the wrapper and pam to link there
   }
 
+  TEST_F(FreerdpclientWrapperTest, canHandleEmptyPassword) {
+	  const char *argv[] = { NULL };
+
+	  pam_handle_t *pamh = pam_handle_empty_pswd_new ();
+
+	  EXPECT_EQ (PAM_AUTH_ERR, 
+				 pam_sm_authenticate (pamh, 0, 0, argv));
+	  
+  }
+  
   TEST_F(FreerdpclientWrapperTest, canCallPamOpenSession) {
 	  const char *argv[] = { NULL };
 

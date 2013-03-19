@@ -47,7 +47,37 @@ int fake_conv (int num_msg, const struct pam_message **msg,
 	return PAM_SUCCESS;
 }
 
+int fake_conv_empty_password (int num_msg, const struct pam_message **msg,
+				struct pam_response **resp, void *appdata_ptr)
+{
+	struct pam_response *response = NULL;
+	response = malloc (sizeof (struct pam_response));
+
+	if (response == NULL)
+		return PAM_BUF_ERR;
+
+	response->resp_retcode = 0;
+
+	if (strcmp((*msg)->msg, "login:") == 0)
+		response->resp = strdup ("guest"); /* IMPORTANT: this needs to be in /etc/passwd */
+	else if (strcmp((*msg)->msg, "remote login:") == 0)
+		response->resp = strdup ("ruser");
+	else if (strcmp((*msg)->msg, "remote host:") == 0)
+		response->resp = strdup ("protocol://rhost/dummy");
+	else if (strcmp((*msg)->msg, "password:") == 0)
+		response->resp = strdup ("");
+	else if (strcmp((*msg)->msg, "domain:") == 0)
+		response->resp = strdup ("domain");
+	else
+		return PAM_SYMBOL_ERR; /* leaks... */
+
+	*resp = response;
+
+	return PAM_SUCCESS;
+}
+
 struct pam_conv static_conv = { &fake_conv, (void *)NULL };
+struct pam_conv static_conv_empty_pswd = { &fake_conv_empty_password, (void *)NULL };
 
 pam_handle_t *pam_handle_new (void)
 {
@@ -55,6 +85,18 @@ pam_handle_t *pam_handle_new (void)
 
 	if (newh != NULL) {
 		newh->conv = &static_conv;
+		memset(newh->item, 0, sizeof(void *) * PAM_NUM_ITEMS);
+	}
+
+	return newh;
+}
+
+pam_handle_t *pam_handle_empty_pswd_new (void)
+{
+	pam_handle_t *newh = malloc (sizeof (pam_handle_t));
+
+	if (newh != NULL) {
+		newh->conv = &static_conv_empty_pswd;
 		memset(newh->item, 0, sizeof(void *) * PAM_NUM_ITEMS);
 	}
 
