@@ -1,4 +1,4 @@
-libpam-freerdp (1.0.1-0ubuntu1~ppa3) UNRELEASED; urgency=low
+libpam-freerdp (1.0.1-0ubuntu1) UNRELEASED; urgency=low
 
   * Inline packaging
 
