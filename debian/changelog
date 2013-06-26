@@ -1,0 +1,98 @@
+libpam-freerdp (1.0.1-0ubuntu1) UNRELEASED; urgency=low
+
+  * Inline packaging
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Mon, 03 Jun 2013 16:45:23 -0400
+
+libpam-freerdp (1.0.1-0ubuntu1~ppa2) quantal; urgency=low
+
+  * Added autogen.sh
+
+ -- Iftikhar Ahmad (QA Engineer) <iftikhar.ahmad@canonical.com>  Tue, 12 Mar 2013 11:16:18 +0500
+
+libpam-freerdp (1.0.1-0ubuntu1~ppa1) quantal; urgency=low
+
+  * New upstream release.
+    * Fix build issue
+
+ -- Ted Gould <ted@ubuntu.com>  Tue, 25 Sep 2012 11:18:25 -0500
+
+libpam-freerdp (1.0.0-0ubuntu1) quantal; urgency=low
+
+  * New upstream release
+    - Add a '.' for a blank domain
+    - Block usernames with spaces
+    - Add test suite
+  * debian/control:
+    - Add gtest build-dependency for test suite
+
+ -- Michael Terry <mterry@ubuntu.com>  Thu, 20 Sep 2012 15:39:30 -0400
+
+libpam-freerdp (0.4.0-0ubuntu1) quantal; urgency=low
+
+  * New upstream release.
+    * Security fixes for priviledged kill of PID
+    * Ensuring return values are trapped
+    * Binding port after dropping permissions
+    * Handling more corner cases
+
+ -- Ted Gould <ted@ubuntu.com>  Wed, 05 Sep 2012 15:57:55 -0500
+
+libpam-freerdp (0.3.0-0ubuntu1) quantal; urgency=low
+
+  * New upstream release.
+    * Bug fixes and security fixes
+
+ -- Ted Gould <ted@ubuntu.com>  Wed, 29 Aug 2012 10:35:22 -0500
+
+libpam-freerdp (0.2.0-0ubuntu1) quantal; urgency=low
+
+  [ Ted Gould ]
+  * New upstream release.
+    * Now with auth helper!
+    * Adding session code in
+    * Various fixes
+  * debian/control: Adding a build-dep on libfreerdp-dev
+
+  [ Michael Terry ]
+  * debian/control:
+    - Add pkg-config to Build-Depends
+
+ -- Ted Gould <ted@ubuntu.com>  Tue, 21 Aug 2012 18:48:42 -0500
+
+libpam-freerdp (0.0.2-0ubuntu1) quantal; urgency=low
+
+  * Initial release in Ubuntu (LP: #1039585)
+  * Add watch file
+  * Use 3.0 quilt format
+  * Drop dh-autoreconf
+  * Don't install .la or .a files
+
+ -- Michael Terry <mterry@ubuntu.com>  Tue, 21 Aug 2012 11:22:23 -0400
+
+libpam-freerdp (0.0.2-0ubuntu1~ppa3) quantal; urgency=low
+
+  * Upstream merge
+    * Fixing pointers to make PAM happy
+
+ -- Ted Gould <ted@ubuntu.com>  Sun, 19 Aug 2012 22:05:52 -0500
+
+libpam-freerdp (0.0.2-0ubuntu1~ppa2) quantal; urgency=low
+
+  * Upstream merge
+    * Changing the conv pointer
+
+ -- Ted Gould <ted@ubuntu.com>  Sun, 19 Aug 2012 21:44:43 -0500
+
+libpam-freerdp (0.0.2-0ubuntu1~ppa1) quantal; urgency=low
+
+  * New upstream release.
+    * Fixing naming and other cleanups
+
+ -- Ted Gould <ted@ubuntu.com>  Sun, 19 Aug 2012 21:11:42 -0500
+
+libpam-freerdp (0.0.1-0ubuntu1~ppa1) quantal; urgency=low
+
+  * New upstream release.
+
+ -- Ted Gould <ted@ubuntu.com>  Sun, 19 Aug 2012 21:02:26 -0500

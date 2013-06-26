@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+override_dh_install:
+	find debian/libpam-freerdp -name '*.a' -delete
+	find debian/libpam-freerdp -name '*.la' -delete
+	dh_install --fail-missing
+
+%:
+	dh $@ --with autoreconf

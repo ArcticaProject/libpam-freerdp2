@@ -1,0 +1,27 @@
+Source: libpam-freerdp
+Section: misc
+Priority: extra
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Build-Depends: debhelper (>= 9),
+               dh-autoreconf,
+               gnome-common,
+               libfreerdp-dev,
+               libgtest-dev,
+               libpam0g-dev,
+               pkg-config,
+Standards-Version: 3.9.4
+Homepage: http://launchpad.net/libpam-freerdp/
+# If you aren't a member of ~freerdp-remote-team but need to upload packaging 
+# changes, just go ahead.  ~freerdp-remote-team will notice and sync up the 
+# code again.
+Vcs-Bzr: https://code.launchpad.net/~freerdp-remote-team/libpam-freerdp/trunk
+
+Package: libpam-freerdp
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         freerdp-x11,
+Description: PAM Module to auth against an RDP server using FreeRDP
+ Auth and session PAM module that uses FreeRDP to authenticate against
+ an RDP server as the remote hosts and user.  Local account required.
+ Most useful with the pam-temp-account module.
