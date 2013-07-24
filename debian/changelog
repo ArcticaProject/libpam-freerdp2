@@ -1,4 +1,4 @@
-libpam-freerdp (1.0.1-0ubuntu2) UNRELEASED; urgency=low
+libpam-freerdp (1.0.1+13.10.20130724-0ubuntu1) saucy; urgency=low
 
   [ Ken VanDine ]
   * Inline packaging
@@ -7,7 +7,22 @@ libpam-freerdp (1.0.1-0ubuntu2) UNRELEASED; urgency=low
   [ Iftikhar Ahmad ]
   * Added autogen.sh
 
- -- Ken VanDine <ken.vandine@canonical.com>  Mon, 03 Jun 2013 16:45:23 -0400
+  [ Ken VanDine ]
+  * inline packaging and preparation for daily release .
+
+  [ Iftikhar Ahmad ]
+  * Improving the test coverage..
+  * Empty password fix and added related unit test Bug#1092428. (LP:
+    #1092428)
+
+  [ iahmad ]
+  * Empty password fix and added related unit test Bug#1092428. (LP:
+    #1092428)
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 42
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Wed, 24 Jul 2013 19:31:03 +0000
 
 libpam-freerdp (1.0.1-0ubuntu1) quantal-proposed; urgency=low
 
