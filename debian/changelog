@@ -1,19 +1,18 @@
-libpam-freerdp (1.0.1-0ubuntu1) UNRELEASED; urgency=low
+libpam-freerdp (1.0.1-0ubuntu2) UNRELEASED; urgency=low
 
+  [ Ken VanDine ]
   * Inline packaging
+  * Automatic snapshot from revision 38 (bootstrap)
+
+  [ Iftikhar Ahmad ]
+  * Added autogen.sh
 
  -- Ken VanDine <ken.vandine@canonical.com>  Mon, 03 Jun 2013 16:45:23 -0400
 
-libpam-freerdp (1.0.1-0ubuntu1~ppa2) quantal; urgency=low
-
-  * Added autogen.sh
-
- -- Iftikhar Ahmad (QA Engineer) <iftikhar.ahmad@canonical.com>  Tue, 12 Mar 2013 11:16:18 +0500
-
-libpam-freerdp (1.0.1-0ubuntu1~ppa1) quantal; urgency=low
+libpam-freerdp (1.0.1-0ubuntu1) quantal-proposed; urgency=low
 
   * New upstream release.
-    * Fix build issue
+    - Fix link issue
 
  -- Ted Gould <ted@ubuntu.com>  Tue, 25 Sep 2012 11:18:25 -0500
 
