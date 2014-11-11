@@ -20,11 +20,11 @@
 #include <freerdp/channels/channels.h>
 #include <string.h>
 
-void
+int
 auth_context_new (freerdp * instance, rdpContext * context)
 {
 	context->channels = freerdp_channels_new();
-	return;
+	return 0;
 }
 
 void
@@ -33,18 +33,18 @@ auth_context_free (freerdp * instance, rdpContext * context)
 	return;
 }
 
-boolean
+BOOL
 auth_pre_connect (freerdp * instance)
 {
 	freerdp_channels_pre_connect(instance->context->channels, instance);
-	return true;
+	return TRUE;
 }
 
-boolean
+BOOL
 auth_post_connect (freerdp * instance)
 {
 	freerdp_channels_post_connect(instance->context->channels, instance);
-	return true;
+	return TRUE;
 }
 
 int
@@ -71,16 +71,16 @@ main (int argc, char * argv[])
 	instance->PreConnect = auth_pre_connect;
 	instance->PostConnect = auth_post_connect;
 
-	instance->context_size = sizeof(rdpContext);
+	instance->ContextSize = sizeof(rdpContext);
 	instance->ContextNew = auth_context_new;
 	instance->ContextFree = auth_context_free;
 
 	freerdp_context_new(instance);
 
-	instance->settings->hostname = argv[1];
-	instance->settings->username = argv[2];
-	instance->settings->domain = argv[3];
-	instance->settings->password = password;
+	instance->settings->ServerHostname = argv[1];
+	instance->settings->Username = argv[2];
+	instance->settings->Domain = argv[3];
+	instance->settings->Password = password;
 
 	char * colonloc = strstr(argv[1], ":");
 	if (colonloc != NULL) {
@@ -88,7 +88,7 @@ main (int argc, char * argv[])
 		colonloc[0] = '\0';
 		colonloc++;
 
-		instance->settings->port = strtoul(colonloc, NULL, 10);
+		instance->settings->ServerPort = strtoul(colonloc, NULL, 10);
 	}
 
 	int retval = -1;
