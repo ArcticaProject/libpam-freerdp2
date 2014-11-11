@@ -1,3 +1,10 @@
+libpam-freerdp (1.0.1+15.04.20141111-0ubuntu1) vivid; urgency=low
+
+  [ Iain Lane ]
+  * Port to new freerdp API
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Tue, 11 Nov 2014 17:51:26 +0000
+
 libpam-freerdp (1.0.1+13.10.20130724-0ubuntu1) saucy; urgency=low
 
   [ Ken VanDine ]
