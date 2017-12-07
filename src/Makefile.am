@@ -1,47 +1,47 @@
-
 pamlibdir = $(PAMMODULEDIR)
-pamlib_LTLIBRARIES = pam_freerdp.la
+pamlib_LTLIBRARIES = pam_freerdp2.la
 
-pam_freerdp_la_SOURCES = \
+pam_freerdp2_la_SOURCES = \
 	auth-check-path.c auth-check-path.h
 
-pam_freerdp_la_LDFLAGS = \
+pam_freerdp2_la_LDFLAGS = \
 	-no-undefined \
 	-module \
 	-avoid-version \
 	$(COVERAGE_LDFLAGS)
 
-pam_freerdp_la_CFLAGS = \
+pam_freerdp2_la_CFLAGS = \
 	-Wall -Werror \
-	-DAUTH_CHECK="\"$(pkglibexecdir)/freerdp-auth-check\"" \
+	-DAUTH_CHECK="\"$(pkglibexecdir)/freerdp2-auth-check\"" \
 	$(COVERAGE_CFLAGS)
 
-pam_freerdp_la_LIBADD = \
-	$(builddir)/libfreerdpcore.la
+pam_freerdp2_la_LIBADD = \
+	$(builddir)/libfreerdp2core.la
 
 noinst_LTLIBRARIES = \
-	libfreerdpcore.la
+	libfreerdp2core.la
 
-libfreerdpcore_la_SOURCES = \
+libfreerdp2core_la_SOURCES = \
 	pam-freerdp.c \
 	pam-freerdp-children.c
-libfreerdpcore_la_CFLAGS = \
+libfreerdp2core_la_CFLAGS = \
 	-Wall -Werror \
 	$(COVERAGE_CFLAGS)
-libfreerdpcore_la_LIBADD = \
+libfreerdp2core_la_LIBADD = \
 	-lpam
-libfreerdpcore_la_LDFLAGS = \
+libfreerdp2core_la_LDFLAGS = \
 	$(COVERAGE_LDFLAGS)
 
 pkglibexec_PROGRAMS = \
-	freerdp-auth-check
+	freerdp2-auth-check
 
-freerdp_auth_check_SOURCES = \
+freerdp2_auth_check_SOURCES = \
 	freerdp-auth-check.c
-freerdp_auth_check_CFLAGS = \
-	$(FREERDP_CFLAGS) \
+freerdp2_auth_check_CFLAGS = \
+	$(FREERDP2_CFLAGS) \
 	$(COVERAGE_CFLAGS)
-freerdp_auth_check_LDADD = \
-	$(FREERDP_LIBS)
-freerdp_auth_check_LDFLAGS = \
+freerdp2_auth_check_LDADD = \
+	$(FREERDP2_LIBS)
+freerdp2_auth_check_LDFLAGS = \
+	$(FREERDP2_LDFLAGS) \
 	$(COVERAGE_LDFLAGS)

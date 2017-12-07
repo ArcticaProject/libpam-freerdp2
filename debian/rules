@@ -3,9 +3,13 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
 override_dh_install:
-	find debian/libpam-freerdp -name '*.a' -delete
-	find debian/libpam-freerdp -name '*.la' -delete
+	find debian/libpam-freerdp2 -name '*.a' -delete
+	find debian/libpam-freerdp2 -name '*.la' -delete
 	dh_install --fail-missing
 
 %:

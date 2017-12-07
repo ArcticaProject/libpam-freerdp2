@@ -432,7 +432,7 @@ pam_sm_setcred (pam_handle_t *pamh, int flags, int argc, const char ** argv)
 #ifdef PAM_STATIC
 
 struct pam_module _pam_freerdp_modstruct = {
-     "pam_freerdp",
+     "pam_freerdp2",
      pam_sm_authenticate,
      pam_sm_setcred,
      NULL,

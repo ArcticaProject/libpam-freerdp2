@@ -1,4 +1,4 @@
-AC_INIT([libpam-freerdp], [1.0.1])
+AC_INIT([libpam-freerdp2], [1.0.1])
 AC_CONFIG_HEADERS([config.h])
 
 AM_INIT_AUTOMAKE([1.11 -Wno-portability])
@@ -25,27 +25,13 @@ fi
 # FreeRDP
 ###########################
 
-PKG_CHECK_MODULES(FREERDP, freerdp)
-
-###########################
-# Local Install
-###########################
-
-with_localinstall="no"
-AC_ARG_ENABLE(localinstall, AS_HELP_STRING([--enable-localinstall],
-                                           [install all files locally (for distcheck)]),
-              with_localinstall=$enableval,
-              with_localinstall=no)
+PKG_CHECK_MODULES(FREERDP2, freerdp2)
 
 ###########################
 # PAM Module dir
 ###########################
 
-if test "x$with_localinstall" = "xyes"; then
-	PAMMODULEDIR="${libdir}/security/"
-else
-	PAMMODULEDIR="/lib/security"
-fi
+PAMMODULEDIR="/lib/security"
 AC_SUBST(PAMMODULEDIR)
 
 ###########################
