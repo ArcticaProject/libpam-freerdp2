@@ -63,25 +63,25 @@ namespace {
 
 	  pam_handle_t *pamh = pam_handle_empty_pswd_new ();
 
-	  EXPECT_EQ (PAM_AUTH_ERR, 
+	  EXPECT_EQ (PAM_AUTH_ERR,
 				 pam_sm_authenticate (pamh, 0, 0, argv));
-	  
+
   }
-  
+
   TEST_F(FreerdpclientWrapperTest, canCallPamOpenSession) {
 	  const char *argv[] = { NULL };
 
 	  pam_handle_t *pamh = pam_handle_new ();
 
-	  EXPECT_EQ (PAM_SUCCESS, 
+	  EXPECT_EQ (PAM_SUCCESS,
 				 pam_sm_authenticate (pamh, 0, 0, argv));
-	  EXPECT_EQ (PAM_SUCCESS, 
+	  EXPECT_EQ (PAM_SUCCESS,
 				 pam_sm_setcred (pamh, 0, 0, argv));
-	  
-	  EXPECT_EQ (PAM_SUCCESS, 
+
+	  EXPECT_EQ (PAM_SUCCESS,
 				 pam_sm_open_session (pamh, 0, 0, argv));
-	  EXPECT_EQ(0, socket_sucker()); 
-	  EXPECT_EQ (PAM_SUCCESS, 
+	  EXPECT_EQ(0, socket_sucker());
+	  EXPECT_EQ (PAM_SUCCESS,
 				 pam_sm_close_session (pamh, 0, 0, argv));
   }
 
