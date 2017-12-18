@@ -26,6 +26,7 @@ fi
 ###########################
 
 PKG_CHECK_MODULES(FREERDP2, freerdp2)
+PKG_CHECK_MODULES(WINPR2, winpr2)
 
 ###########################
 # PAM Module dir

@@ -19,12 +19,14 @@
 #include <freerdp/freerdp.h>
 #include <freerdp/channels/channels.h>
 #include <string.h>
+#include <sys/mman.h>
+#include <winpr/wlog.h>
 
-int
+
+BOOL
 auth_context_new (freerdp * instance, rdpContext * context)
 {
-	context->channels = freerdp_channels_new();
-	return 0;
+	return TRUE;
 }
 
 void
@@ -36,14 +38,12 @@ auth_context_free (freerdp * instance, rdpContext * context)
 BOOL
 auth_pre_connect (freerdp * instance)
 {
-	freerdp_channels_pre_connect(instance->context->channels, instance);
 	return TRUE;
 }
 
 BOOL
 auth_post_connect (freerdp * instance)
 {
-	freerdp_channels_post_connect(instance->context->channels, instance);
 	return TRUE;
 }
 
@@ -64,8 +64,13 @@ main (int argc, char * argv[])
 		return -1;
 	}
 
-	freerdp_channels_global_init();
+#ifndef ENABLE_WLOG
+	wLog* root = WLog_GetRoot();
 
+	if (!WLog_SetStringLogLevel(root, "OFF")){
+		return -1;
+	}
+#endif
 	freerdp * instance = freerdp_new();
 
 	instance->PreConnect = auth_pre_connect;
@@ -75,12 +80,10 @@ main (int argc, char * argv[])
 	instance->ContextNew = auth_context_new;
 	instance->ContextFree = auth_context_free;
 
-	freerdp_context_new(instance);
-
-	instance->settings->ServerHostname = argv[1];
-	instance->settings->Username = argv[2];
-	instance->settings->Domain = argv[3];
-	instance->settings->Password = password;
+	if (!freerdp_context_new(instance)) {
+		printf("Coudln't create freerdp context\n");
+		return -1;
+	}
 
 	char * colonloc = strstr(argv[1], ":");
 	if (colonloc != NULL) {
@@ -91,14 +94,30 @@ main (int argc, char * argv[])
 		instance->settings->ServerPort = strtoul(colonloc, NULL, 10);
 	}
 
-	int retval = -1;
-	if (freerdp_connect(instance)) {
-		freerdp_disconnect(instance);
-		retval = 0;
-	}
+	instance->settings->AuthenticationOnly = TRUE;
+	instance->settings->ServerHostname = argv[1];
+	instance->settings->Username = argv[2];
+	instance->settings->Domain = argv[3];
+	instance->settings->Password = password;
+
+	BOOL connection_successful;
+	connection_successful = freerdp_connect(instance);
+	freerdp_disconnect(instance);
 
 	memset(password, 0, sizeof(password));
 	munlock(password, sizeof(password));
+	instance->settings->Password = NULL;
+	instance->settings->ServerHostname = NULL;
+	instance->settings->Username = NULL;
+	instance->settings->Domain = NULL;
+
+	int retval = 0;
+	if (!connection_successful) {
+		retval = freerdp_get_last_error(instance->context);
+	}
+
+	freerdp_context_free(instance);
+	freerdp_free(instance);
 
 	return retval;
 }

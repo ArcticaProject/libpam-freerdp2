@@ -39,9 +39,12 @@ freerdp2_auth_check_SOURCES = \
 	freerdp-auth-check.c
 freerdp2_auth_check_CFLAGS = \
 	$(FREERDP2_CFLAGS) \
+	$(WINPR2_CFLAGS) \
 	$(COVERAGE_CFLAGS)
 freerdp2_auth_check_LDADD = \
-	$(FREERDP2_LIBS)
+	$(FREERDP2_LIBS) \
+	$(WINPR2_LIBS)
 freerdp2_auth_check_LDFLAGS = \
 	$(FREERDP2_LDFLAGS) \
+	$(WINPR2_LDFLAGS) \
 	$(COVERAGE_LDFLAGS)
