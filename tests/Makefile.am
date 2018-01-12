@@ -60,7 +60,8 @@ test_freerdpclient_wrapper_CXXFLAGS = \
 
 test_freerdpclient_wrapper_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
-	-DAUTH_CHECK="\"$(abs_builddir)/test-freerdp-auth\""
+	-DAUTH_CHECK="\"$(abs_builddir)/test-freerdp-auth\"" \
+	-DLIBPAM_COMPILE
 
 test_freerdpclient_wrapper_LDFLAGS = \
 	-pthread
