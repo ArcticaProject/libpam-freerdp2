@@ -50,10 +50,17 @@ test_freerdpclient_wrapper_LDADD = \
 	$(top_builddir)/src/libfreerdpcore.la \
 	libgtest.a
 
+test_freerdpclient_wrapper_CFLAGS = \
+	$(AM_CXXFLAGS) \
+	-I${top_srcdir}/src
+
 test_freerdpclient_wrapper_CXXFLAGS = \
 	$(AM_CXXFLAGS) \
-	-DAUTH_CHECK="\"$(abs_builddir)/test-freerdp-auth\"" \
 	-I${top_srcdir}/src
+
+test_freerdpclient_wrapper_CPPFLAGS = \
+	$(AM_CPPFLAGS) \
+	-DAUTH_CHECK="\"$(abs_builddir)/test-freerdp-auth\""
 
 test_freerdpclient_wrapper_LDFLAGS = \
 	-pthread
@@ -64,4 +71,3 @@ test_freerdpclient_wrapper_LDFLAGS = \
 
 test_freerdp_auth_SOURCES = \
 	test-freerdp-auth.c
-
