@@ -41,13 +41,13 @@ namespace {
     virtual void SetUp() {
       // Code here will be called immediately after the constructor (right
       // before each test).
-		unlink("/tmp/.freerdp-socket");
+		unlink("/tmp/.freerdp2-socket");
     }
 
     virtual void TearDown() {
       // Code here will be called immediately after each test (right
       // before the destructor).
-		unlink("/tmp/.freerdp-socket");
+		unlink("/tmp/.freerdp2-socket");
     }
 
     // Objects declared here can be used by all tests in the test case for Foo.
