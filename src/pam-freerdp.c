@@ -167,7 +167,7 @@ get_item (pam_handle_t * pamh, int type)
 
 	char * retval = NULL;
 	if (promptval != NULL) { /* Can't believe it really would be at this point, but let's be sure */
-		if ((type != PAM_TYPE_RDPDOMAIN) && type != PAM_TYPE_RDPSERVER)) {
+		if ((type != PAM_TYPE_RDPDOMAIN) && (type != PAM_TYPE_RDPSERVER)) {
 			/* We can only use the PAM functions if it's neither server nor domain */
 			pam_set_item(pamh, type, (const void *)promptval);
 			/* We're returning the value saved by PAM so we can clear promptval */
