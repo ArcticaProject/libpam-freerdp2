@@ -19,7 +19,8 @@
 #ifndef _PAM_FREERDP_CHILDREN_H_
 #define _PAM_FREERDP_CHILDREN_H_
 
-#define PAM_TYPE_DOMAIN  1234
+#define PAM_TYPE_RDPSERVER  1234
+#define PAM_TYPE_RDPDOMAIN  1235
 #define ALL_GOOD_SIGNAL  "Ar, ready to authenticate cap'n"
 
 void

@@ -42,6 +42,7 @@
 static int unpriveleged_kill (struct passwd * pwdent);
 
 static char * global_domain = NULL;
+static char * global_server = NULL;
 /* FIXME? This is a work around to the fact that PAM seems to be clearing
    the auth token between authorize and open_session.  Which then requires
    us to save it.  Seems like we're the wrong people to do it, but we have
@@ -54,7 +55,7 @@ get_item (pam_handle_t * pamh, int type)
 {
 	/* Check to see if we just have the value.  If we do, great
 	   let's dup it some we're consitently allocating memory */
-	if (type != PAM_TYPE_DOMAIN) {
+	if ((type != PAM_TYPE_RDPDOMAIN) && (type != PAM_TYPE_RDPSERVER)) {
 		/* If it's not a domain we can use the PAM functions because the PAM
 		   functions don't support the domain */
 		char * value = NULL;
@@ -69,6 +70,9 @@ get_item (pam_handle_t * pamh, int type)
 	} else {
 		/* Here we only have domains, so we can see if the global domain is
 		   useful for us, if we have it */
+		if (global_server != NULL) {
+			return global_server;
+		}
 		if (global_domain != NULL) {
 			return global_domain;
 		}
@@ -89,14 +93,14 @@ get_item (pam_handle_t * pamh, int type)
 	case PAM_RUSER:
 		message.msg = "remote login:";
 		break;
-	case PAM_RHOST:
+	case PAM_TYPE_RDPSERVER:
 		message.msg = "remote host:";
 		break;
 	case PAM_AUTHTOK:
 		message.msg = "password:";
 		message.msg_style = PAM_PROMPT_ECHO_OFF;
 		break;
-	case PAM_TYPE_DOMAIN:
+	case PAM_TYPE_RDPDOMAIN:
 		message.msg = "domain:";
 		break;
 	default:
@@ -145,7 +149,7 @@ get_item (pam_handle_t * pamh, int type)
 		}
 	}
 
-	if (type == PAM_RHOST) {
+	if (type == PAM_TYPE_RDPSERVER) {
 		char * subloc = strstr(promptval, "://");
 		if (subloc != NULL) {
 			char * original = promptval;
@@ -163,13 +167,21 @@ get_item (pam_handle_t * pamh, int type)
 
 	char * retval = NULL;
 	if (promptval != NULL) { /* Can't believe it really would be at this point, but let's be sure */
-		if (type != PAM_TYPE_DOMAIN) {
-			/* We can only use the PAM functions if it's not the domain */
+		if ((type != PAM_TYPE_RDPDOMAIN) && type != PAM_TYPE_RDPSERVER)) {
+			/* We can only use the PAM functions if it's neither server nor domain */
 			pam_set_item(pamh, type, (const void *)promptval);
 			/* We're returning the value saved by PAM so we can clear promptval */
 			pam_get_item(pamh, type, (const void **)&retval);
 		}
-		if (type == PAM_TYPE_DOMAIN) {
+		if (type == PAM_TYPE_RDPSERVER) {
+			/* The domain can be saved globally so we can use it for open */
+			if (global_server != NULL) {
+				free(global_server);
+			}
+			global_server = strdup(promptval);
+			retval = global_server;
+		}
+		if (type == PAM_TYPE_RDPDOMAIN) {
 			/* The domain can be saved globally so we can use it for open */
 			if (global_domain != NULL) {
 				free(global_domain);
@@ -227,8 +239,8 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags, int argc, const char **argv)
 	   an auth error */
 	GET_ITEM(username, PAM_USER);
 	GET_ITEM(ruser,    PAM_RUSER);
-	GET_ITEM(rhost,    PAM_RHOST);
-	GET_ITEM(rdomain,  PAM_TYPE_DOMAIN);
+	GET_ITEM(rhost,    PAM_TYPE_RDPSERVER);
+	GET_ITEM(rdomain,  PAM_TYPE_RDPDOMAIN);
 	GET_ITEM(password, PAM_AUTHTOK);
 
 	int stdinpipe[2];
@@ -292,7 +304,7 @@ pam_sm_open_session (pam_handle_t *pamh, int flags, int argc, const char ** argv
 	   an auth error */
 	GET_ITEM(username, PAM_USER);
 	GET_ITEM(ruser,    PAM_RUSER);
-	GET_ITEM(rhost,    PAM_RHOST);
+	GET_ITEM(rhost,    PAM_TYPE_RDPSERVER);
 	GET_ITEM(rdomain,  PAM_TYPE_DOMAIN);
 	GET_ITEM(password, PAM_AUTHTOK);
 
@@ -303,7 +315,7 @@ pam_sm_open_session (pam_handle_t *pamh, int flags, int argc, const char ** argv
 	}
 
 	if (session_pid != 0) {
-		unpriveleged_kill(pwdent);
+		unpriveleged_kill(pwdmikeent);
 	}
 
 	int sessionready[2];
