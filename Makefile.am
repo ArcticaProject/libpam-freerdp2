@@ -1,7 +1,8 @@
+SUBDIRS = src
 
-SUBDIRS = \
-	src \
-	tests
+if HAVE_GTEST
+SUBDIRS += tests
+endif
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-localinstall
 
