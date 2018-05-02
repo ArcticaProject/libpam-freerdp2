@@ -82,7 +82,7 @@ main (int argc, char * argv[])
 	instance->ContextFree = auth_context_free;
 
 	if (!freerdp_context_new(instance)) {
-		printf("Coudln't create freerdp context\n");
+		printf("Couldn't create freerdp_context\n");
 		return -1;
 	}
 
