@@ -315,7 +315,7 @@ pam_sm_open_session (pam_handle_t *pamh, int flags, int argc, const char ** argv
 	}
 
 	if (session_pid != 0) {
-		unpriveleged_kill(pwdmikeent);
+		unpriveleged_kill(pwdent);
 	}
 
 	int sessionready[2];
