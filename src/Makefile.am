@@ -1,3 +1,5 @@
+NULL =
+
 pamlibdir = $(PAMMODULEDIR)
 pamlib_LTLIBRARIES = pam_freerdp2.la
 
@@ -18,6 +20,11 @@ pam_freerdp2_la_CFLAGS = \
 pam_freerdp2_la_LIBADD = \
 	$(builddir)/libfreerdp2core.la
 
+pam_freerdp2includedir = $(includedir)/security/
+pam_freerdp2include_HEADERS =					\
+        $(top_srcdir)/include/pam-freerdp2.h			\
+        $(NULL)
+
 noinst_LTLIBRARIES = \
 	libfreerdp2core.la
 
@@ -29,8 +36,13 @@ libfreerdp2core_la_CFLAGS = \
 	$(COVERAGE_CFLAGS)
 libfreerdp2core_la_LIBADD = \
 	-lpam
+libfreerdp2core_la_CPPFLAGS =					\
+        -I$(top_srcdir)/include					\
+        $(NULL)
 libfreerdp2core_la_LDFLAGS = \
 	$(COVERAGE_LDFLAGS)
+
+
 
 pkglibexec_PROGRAMS = \
 	freerdp2-auth-check

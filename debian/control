@@ -22,3 +22,14 @@ Description: PAM Module to auth against an RDP server using FreeRDPv2
  Auth and session PAM module that uses FreeRDPv2 to authenticate against
  an RDP server as the remote host and user. Local account required.
  Most useful with the pam-temp-account module.
+
+Package: libpam-freerdp2-dev
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: PAM Module to auth against an RDP server using FreeRDPv2 (development files)
+ Auth and session PAM module that uses FreeRDPv2 to authenticate against
+ an RDP server as the remote host and user. Local account required.
+ Most useful with the pam-temp-account module.
+ .
+ This package contains the pam_freerdp2.so header files.
