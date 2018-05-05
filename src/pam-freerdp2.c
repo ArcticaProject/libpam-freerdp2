@@ -43,8 +43,9 @@
 
 static int unpriveleged_kill (struct passwd * pwdent);
 
-static char * global_domain = NULL;
-static char * global_server = NULL;
+static char * global_rdp_user = NULL;
+static char * global_rdp_domain = NULL;
+static char * global_rdp_server = NULL;
 /* FIXME? This is a work around to the fact that PAM seems to be clearing
    the auth token between authorize and open_session.  Which then requires
    us to save it.  Seems like we're the wrong people to do it, but we have
@@ -57,7 +58,7 @@ get_item (pam_handle_t * pamh, int type)
 {
 	/* Check to see if we just have the value.  If we do, great
 	   let's dup it some we're consitently allocating memory */
-	if ((type != PAM_TYPE_RDPDOMAIN) && (type != PAM_TYPE_RDPSERVER)) {
+	if ((type == PAM_USER) || (type != PAM_AUTHTOK)) {
 		/* If it's not a domain we can use the PAM functions because the PAM
 		   functions don't support the domain */
 		char * value = NULL;
@@ -72,11 +73,14 @@ get_item (pam_handle_t * pamh, int type)
 	} else {
 		/* Here we only have domains, so we can see if the global domain is
 		   useful for us, if we have it */
-		if (global_server != NULL) {
-			return global_server;
+		if ((type == PAM_TYPE_RDP_USER) && (global_user != NULL)) {
+			return global_user;
 		}
-		if (global_domain != NULL) {
-			return global_domain;
+		if ((type == PAM_TYPE_RDP_SERVER) && (global_rdp_server != NULL)) {
+			return global_rdp_server;
+		}
+		if ((type == PAM_TYPE_RDP_DOMAIN) && (global_rdp_domain != NULL)) {
+			return global_rdp_domain;
 		}
 	}
 	/* Now we need to prompt */
@@ -92,17 +96,17 @@ get_item (pam_handle_t * pamh, int type)
 	case PAM_USER:
 		message.msg = PAM_FREERDP2_PROMPT_GUESTLOGIN;
 		break;
-	case PAM_RUSER:
+	case PAM_TYPE_RDP_USER:
 		message.msg = PAM_FREERDP2_PROMPT_USER;
 		break;
-	case PAM_TYPE_RDPSERVER:
+	case PAM_TYPE_RDP_SERVER:
 		message.msg = PAM_FREERDP2_PROMPT_HOST;
 		break;
 	case PAM_AUTHTOK:
 		message.msg = PAM_FREERDP2_PROMPT_PASSWORD;
 		message.msg_style = PAM_PROMPT_ECHO_OFF;
 		break;
-	case PAM_TYPE_RDPDOMAIN:
+	case PAM_TYPE_RDP_DOMAIN:
 		message.msg = PAM_FREERDP2_PROMPT_DOMAIN;
 		break;
 	default:
@@ -144,14 +148,14 @@ get_item (pam_handle_t * pamh, int type)
 	   Though, if the xfreerdp part gets fixed, we want this to disappear
 	     http://launchpad.net/bugs/1053102
 	*/
-	if (type == PAM_RUSER) {
+	if (type == PAM_TYPE_RDP_USER) {
 		if (strstr(promptval, " ") != NULL) {
 			free(promptval);
 			return NULL;
 		}
 	}
 
-	if (type == PAM_TYPE_RDPSERVER) {
+	if (type == PAM_TYPE_RDP_SERVER) {
 		char * subloc = strstr(promptval, "://");
 		if (subloc != NULL) {
 			char * original = promptval;
@@ -169,27 +173,35 @@ get_item (pam_handle_t * pamh, int type)
 
 	char * retval = NULL;
 	if (promptval != NULL) { /* Can't believe it really would be at this point, but let's be sure */
-		if ((type != PAM_TYPE_RDPDOMAIN) && (type != PAM_TYPE_RDPSERVER)) {
+		if ((type == PAM_USER) || (type == PAM_AUTHTOK)) {
 			/* We can only use the PAM functions if it's neither server nor domain */
 			pam_set_item(pamh, type, (const void *)promptval);
 			/* We're returning the value saved by PAM so we can clear promptval */
 			pam_get_item(pamh, type, (const void **)&retval);
 		}
-		if (type == PAM_TYPE_RDPSERVER) {
+		if (type == PAM_TYPE_RDP_USER) {
 			/* The domain can be saved globally so we can use it for open */
-			if (global_server != NULL) {
-				free(global_server);
+			if (global_rdp_user != NULL) {
+				free(global_rdp_user);
 			}
-			global_server = strdup(promptval);
-			retval = global_server;
+			global_rdp_user = strdup(promptval);
+			retval = global_rdp_user;
 		}
-		if (type == PAM_TYPE_RDPDOMAIN) {
+		if (type == PAM_TYPE_RDP_SERVER) {
 			/* The domain can be saved globally so we can use it for open */
-			if (global_domain != NULL) {
-				free(global_domain);
+			if (global_rdp_server != NULL) {
+				free(global_rdp_server);
 			}
-			global_domain = strdup(promptval);
-			retval = global_domain;
+			global_rdp_server = strdup(promptval);
+			retval = global_rdp_server;
+		}
+		if (type == PAM_TYPE_RDP_DOMAIN) {
+			/* The domain can be saved globally so we can use it for open */
+			if (global_rdp_domain != NULL) {
+				free(global_rdp_domain);
+			}
+			global_rdp_domain = strdup(promptval);
+			retval = global_rdp_domain;
 		}
 		if (type == PAM_AUTHTOK) {
 			/* We also save the password globally if we've got one */
@@ -240,9 +252,9 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags, int argc, const char **argv)
 	/* Get all the values, or prompt for them, or return with
 	   an auth error */
 	GET_ITEM(username, PAM_USER);
-	GET_ITEM(ruser,    PAM_RUSER);
-	GET_ITEM(rhost,    PAM_TYPE_RDPSERVER);
-	GET_ITEM(rdomain,  PAM_TYPE_RDPDOMAIN);
+	GET_ITEM(ruser,    PAM_TYPE_RDP_USER);
+	GET_ITEM(rhost,    PAM_TYPE_RDP_SERVER);
+	GET_ITEM(rdomain,  PAM_TYPE_RDP_DOMAIN);
 	GET_ITEM(password, PAM_AUTHTOK);
 
 	int stdinpipe[2];
@@ -305,9 +317,9 @@ pam_sm_open_session (pam_handle_t *pamh, int flags, int argc, const char ** argv
 	/* Get all the values, or prompt for them, or return with
 	   an auth error */
 	GET_ITEM(username, PAM_USER);
-	GET_ITEM(ruser,    PAM_RUSER);
-	GET_ITEM(rhost,    PAM_TYPE_RDPSERVER);
-	GET_ITEM(rdomain,  PAM_TYPE_RDPDOMAIN);
+	GET_ITEM(ruser,    PAM_TYPE_RDP_USER);
+	GET_ITEM(rhost,    PAM_TYPE_RDP_SERVER);
+	GET_ITEM(rdomain,  PAM_TYPE_RDP_DOMAIN);
 	GET_ITEM(password, PAM_AUTHTOK);
 
 	struct passwd * pwdent = getpwnam(username);
