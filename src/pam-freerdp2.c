@@ -73,8 +73,8 @@ get_item (pam_handle_t * pamh, int type)
 	} else {
 		/* Here we only have domains, so we can see if the global domain is
 		   useful for us, if we have it */
-		if ((type == PAM_TYPE_RDP_USER) && (global_user != NULL)) {
-			return global_user;
+		if ((type == PAM_TYPE_RDP_USER) && (global_rdp_user != NULL)) {
+			return global_rdp_user;
 		}
 		if ((type == PAM_TYPE_RDP_SERVER) && (global_rdp_server != NULL)) {
 			return global_rdp_server;
