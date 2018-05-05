@@ -18,7 +18,7 @@ pam_freerdp2_la_LDFLAGS =					\
 
 pam_freerdp2_la_CFLAGS =					\
         -Wall -Werror						\
-        -DAUTH_CHECK="\"$(pkglibexecdir)/freerdp2-auth-check\""	\
+        -DAUTH_CHECK="\"$(libexecdir)/freerdp2-auth-check\""	\
         $(COVERAGE_CFLAGS)					\
         $(NULL)
 
@@ -35,7 +35,7 @@ pam_freerdp2include_HEADERS =					\
         $(top_srcdir)/include/pam-freerdp2.h			\
         $(NULL)
 
-pkglibexec_PROGRAMS =						\
+libexec_PROGRAMS =						\
         freerdp2-auth-check					\
         $(NULL)
 
