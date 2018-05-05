@@ -228,4 +228,3 @@ cleanup:
 
 	_exit(EXIT_FAILURE);
 }
-
