@@ -38,7 +38,7 @@
 
 #include "pam-freerdp2.h"
 
-#include "pam-freerdp-children.h"
+#include "pam-freerdp2-children.h"
 #include "auth-check-path.h"
 
 static int unpriveleged_kill (struct passwd * pwdent);

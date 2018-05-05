@@ -29,8 +29,8 @@ noinst_LTLIBRARIES = \
 	libfreerdp2core.la
 
 libfreerdp2core_la_SOURCES = \
-	pam-freerdp.c \
-	pam-freerdp-children.c
+	pam-freerdp2.c \
+	pam-freerdp2-children.c
 libfreerdp2core_la_CFLAGS = \
 	-Wall -Werror \
 	$(COVERAGE_CFLAGS)
@@ -48,7 +48,7 @@ pkglibexec_PROGRAMS = \
 	freerdp2-auth-check
 
 freerdp2_auth_check_SOURCES = \
-	freerdp-auth-check.c
+	freerdp2-auth-check.c
 freerdp2_auth_check_CFLAGS = \
 	$(FREERDP2_CFLAGS) \
 	$(WINPR2_CFLAGS) \
