@@ -52,8 +52,8 @@ main (int argc, char * argv[])
 {
 	char password[512];
 	if (argc != 4) {
-		printf("Not enough params\n\n");
 		printf("Usage: echo <passwd> | freerdp2-auth-check <host>[:<port>] <user> <domain>\n\n");
+		printf("ERROR: Incorrect number of parameters.\n\n");
 		return -1;
 	}
 
