@@ -144,9 +144,9 @@ get_item (pam_handle_t * pamh, int type)
 	}
 
 	/* The way that xfreerdp does parsing means that we can't handle
-	   spaces in the username.  Let's block them as early as possible.
+	   spaces in the username. Let's block them as early as possible.
 	   Though, if the xfreerdp part gets fixed, we want this to disappear
-	     http://launchpad.net/bugs/1053102
+	   http://launchpad.net/bugs/1053102
 	*/
 	if (type == PAM_TYPE_RDP_USER) {
 		if (strstr(promptval, " ") != NULL) {
@@ -180,7 +180,7 @@ get_item (pam_handle_t * pamh, int type)
 			pam_get_item(pamh, type, (const void **)&retval);
 		}
 		if (type == PAM_TYPE_RDP_USER) {
-			/* The domain can be saved globally so we can use it for open */
+			/* The user can be saved globally so we can use it for open */
 			if (global_rdp_user != NULL) {
 				free(global_rdp_user);
 			}
@@ -188,7 +188,7 @@ get_item (pam_handle_t * pamh, int type)
 			retval = global_rdp_user;
 		}
 		if (type == PAM_TYPE_RDP_SERVER) {
-			/* The domain can be saved globally so we can use it for open */
+			/* The server can be saved globally so we can use it for open */
 			if (global_rdp_server != NULL) {
 				free(global_rdp_server);
 			}
