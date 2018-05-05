@@ -58,7 +58,7 @@ get_item (pam_handle_t * pamh, int type)
 {
 	/* Check to see if we just have the value.  If we do, great
 	   let's dup it some we're consitently allocating memory */
-	if ((type == PAM_USER) || (type != PAM_AUTHTOK)) {
+	if ((type == PAM_USER) || (type == PAM_AUTHTOK)) {
 		/* If it's not a domain we can use the PAM functions because the PAM
 		   functions don't support the domain */
 		char * value = NULL;
