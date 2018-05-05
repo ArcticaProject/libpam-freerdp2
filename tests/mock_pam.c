@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "mock_pam.h"
+#include "pam-freerdp2.h"
 
 struct pam_handle {
 	void *item[PAM_NUM_ITEMS];
@@ -29,15 +30,15 @@ int fake_conv (int num_msg, const struct pam_message **msg,
 
 	response->resp_retcode = 0;
 
-	if (strcmp((*msg)->msg, "login:") == 0)
+	if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_GUESTLOGIN) == 0)
 		response->resp = strdup ("guest"); /* IMPORTANT: this needs to be in /etc/passwd */
-	else if (strcmp((*msg)->msg, "remote login:") == 0)
+	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_USER) == 0)
 		response->resp = strdup ("ruser");
-	else if (strcmp((*msg)->msg, "remote host:") == 0)
+	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_HOST) == 0)
 		response->resp = strdup ("protocol://rhost/dummy");
-	else if (strcmp((*msg)->msg, "password:") == 0)
+	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_PASSWORD) == 0)
 		response->resp = strdup ("password");
-	else if (strcmp((*msg)->msg, "domain:") == 0)
+	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_DOMAIN) == 0)
 		response->resp = strdup ("domain");
 	else
 		return PAM_SYMBOL_ERR; /* leaks... */
@@ -58,15 +59,15 @@ int fake_conv_empty_password (int num_msg, const struct pam_message **msg,
 
 	response->resp_retcode = 0;
 
-	if (strcmp((*msg)->msg, "login:") == 0)
+	if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_GUESTLOGIN) == 0)
 		response->resp = strdup ("guest"); /* IMPORTANT: this needs to be in /etc/passwd */
-	else if (strcmp((*msg)->msg, "remote login:") == 0)
+	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_USER) == 0)
 		response->resp = strdup ("ruser");
-	else if (strcmp((*msg)->msg, "remote host:") == 0)
+	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_HOST) == 0)
 		response->resp = strdup ("protocol://rhost/dummy");
-	else if (strcmp((*msg)->msg, "password:") == 0)
+	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_PASSWORD) == 0)
 		response->resp = strdup ("");
-	else if (strcmp((*msg)->msg, "domain:") == 0)
+	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_DOMAIN) == 0)
 		response->resp = strdup ("domain");
 	else
 		return PAM_SYMBOL_ERR; /* leaks... */
@@ -103,7 +104,7 @@ pam_handle_t *pam_handle_empty_pswd_new (void)
 	return newh;
 }
 
-int pam_get_item (const pam_handle_t *pamh, int type, const void **value)
+int PAM_NONNULL((1)) pam_get_item (const pam_handle_t *pamh, int type, const void **value)
 {
 	if (pamh == NULL)
 		return PAM_SYSTEM_ERR;
@@ -118,7 +119,7 @@ int pam_get_item (const pam_handle_t *pamh, int type, const void **value)
 	return PAM_SUCCESS;
 }
 
-int pam_set_item (pam_handle_t *pamh, int type, const void *value)
+int PAM_NONNULL((1)) pam_set_item (pam_handle_t *pamh, int type, const void *value)
 {
 	if (pamh == NULL)
 		return PAM_SYSTEM_ERR;

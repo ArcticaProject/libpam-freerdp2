@@ -118,5 +118,3 @@ socket_sucker ()
 		return -1;
 	}
 }
-
-

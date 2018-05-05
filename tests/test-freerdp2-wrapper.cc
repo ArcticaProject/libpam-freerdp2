@@ -12,6 +12,8 @@ extern "C" {
 #include "mock_pam.h"
 #include "mock_guest.h"
 
+#include "pam-freerdp2-private.h"
+
 	int freerdpclient_wrapper (int argc, char * argv[]);
 
 const char * auth_check_path = AUTH_CHECK;
