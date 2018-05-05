@@ -90,20 +90,20 @@ get_item (pam_handle_t * pamh, int type)
 
 	switch (type) {
 	case PAM_USER:
-		message.msg = "login:";
+		message.msg = PAM_FREERDP2_PROMPT_GUESTLOGIN;
 		break;
 	case PAM_RUSER:
-		message.msg = "remote login:";
+		message.msg = PAM_FREERDP2_PROMPT_USER;
 		break;
 	case PAM_TYPE_RDPSERVER:
-		message.msg = "remote host:";
+		message.msg = PAM_FREERDP2_PROMPT_HOST;
 		break;
 	case PAM_AUTHTOK:
-		message.msg = "password:";
+		message.msg = PAM_FREERDP2_PROMPT_PASSWORD;
 		message.msg_style = PAM_PROMPT_ECHO_OFF;
 		break;
 	case PAM_TYPE_RDPDOMAIN:
-		message.msg = "domain:";
+		message.msg = PAM_FREERDP2_PROMPT_DOMAIN;
 		break;
 	default:
 		return NULL;
