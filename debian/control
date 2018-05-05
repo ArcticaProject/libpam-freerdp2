@@ -4,8 +4,8 @@ Priority: optional
 Maintainer: Artica Project <devs@lists.arctica-project.org>
 Uploaders:
  Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
-Build-Depends: debhelper (>= 9),
-               dh-autoreconf,
+Build-Depends: cdbs,
+               debhelper (>= 9),
                mate-common,
                freerdp2-dev (>= 2~),
                libgtest-dev,
