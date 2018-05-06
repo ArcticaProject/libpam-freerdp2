@@ -173,13 +173,14 @@ get_item (pam_handle_t * pamh, int type)
 	char * retval = NULL;
 	if (promptval != NULL) { /* Can't believe it really would be at this point, but let's be sure */
 		if ((type == PAM_USER) || (type == PAM_AUTHTOK)) {
-			/* We can only use the PAM functions if it's neither server nor domain */
+			/* We can only use the PAM functions for types supported by PAM */
 			pam_set_item(pamh, type, (const void *)promptval);
 			/* We're returning the value saved by PAM so we can clear promptval */
 			pam_get_item(pamh, type, (const void **)&retval);
 		}
+		/* Here we deal with all RDP specific parameters */
 		if (type == PAM_TYPE_RDP_USER) {
-			/* The user can be saved globally so we can use it for open */
+			/* The remote user can be saved globally */
 			if (global_rdp_user != NULL) {
 				free(global_rdp_user);
 			}
@@ -187,7 +188,7 @@ get_item (pam_handle_t * pamh, int type)
 			retval = global_rdp_user;
 		}
 		if (type == PAM_TYPE_RDP_SERVER) {
-			/* The server can be saved globally so we can use it for open */
+			/* The remote server can be saved globally */
 			if (global_rdp_server != NULL) {
 				free(global_rdp_server);
 			}
@@ -195,7 +196,7 @@ get_item (pam_handle_t * pamh, int type)
 			retval = global_rdp_server;
 		}
 		if (type == PAM_TYPE_RDP_DOMAIN) {
-			/* The domain can be saved globally so we can use it for open */
+			/* The remote domain can be saved globally */
 			if (global_rdp_domain != NULL) {
 				free(global_rdp_domain);
 			}
