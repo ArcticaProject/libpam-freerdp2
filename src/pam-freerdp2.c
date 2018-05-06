@@ -266,31 +266,31 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags, int argc, const char **argv)
 	/* At this point we should have the values, let's check the auth */
 	pid_t pid;
 	switch (pid = fork()) {
-	case 0: { /* child */
-		pam_sm_authenticate_helper (stdinpipe, username, rhost, ruser, rdomain);
-		break;
-	}
-	case -1: { /* fork'n error! */
-		retval = PAM_SYSTEM_ERR;
-		break;
-	}
-	default: {
-		int forkret = 0;
-		int bytesout = 0;
-
-		bytesout += write(stdinpipe[1], password, strlen(password));
-		bytesout += write(stdinpipe[1], "\n", 1);
-
-		close(stdinpipe[1]);
-
-		if (waitpid(pid, &forkret, 0) < 0 || bytesout == 0) {
-			retval = PAM_SYSTEM_ERR;
-		} else if (forkret == 0) {
-			retval = PAM_SUCCESS;
-		} else {
-			retval = PAM_AUTH_ERR;
+		case 0: { /* child */
+			pam_sm_authenticate_helper (stdinpipe, username, rhost, ruser, rdomain);
+			break;
 		}
-	}
+		case -1: { /* fork'n error! */
+			retval = PAM_SYSTEM_ERR;
+			break;
+		}
+		default: {
+			int forkret = 0;
+			int bytesout = 0;
+
+			bytesout += write(stdinpipe[1], password, strlen(password));
+			bytesout += write(stdinpipe[1], "\n", 1);
+
+			close(stdinpipe[1]);
+
+			if (waitpid(pid, &forkret, 0) < 0 || bytesout == 0) {
+				retval = PAM_SYSTEM_ERR;
+			} else if (forkret == 0) {
+				retval = PAM_SUCCESS;
+			} else {
+				retval = PAM_AUTH_ERR;
+			}
+		}
 	}
 
 	/* Return our status */
