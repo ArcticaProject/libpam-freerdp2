@@ -57,10 +57,10 @@ static char *
 get_item (pam_handle_t * pamh, int type)
 {
 	/* Check to see if we just have the value.  If we do, great
-	   let's dup it some we're consitently allocating memory */
+	   let's dup it some we're consistently allocating memory */
 	if ((type == PAM_USER) || (type == PAM_AUTHTOK)) {
-		/* If it's not a domain we can use the PAM functions because the PAM
-		   functions don't support the domain */
+		/* If it's not an RDP parameter type we can use the PAM functions because the PAM
+		   functions don't support RDP parameters */
 		char * value = NULL;
 		if (pam_get_item(pamh, type, (const void **)&value) == PAM_SUCCESS && value != NULL) {
 			return value;
@@ -71,8 +71,7 @@ get_item (pam_handle_t * pamh, int type)
 			return global_password;
 		}
 	} else {
-		/* Here we only have domains, so we can see if the global domain is
-		   useful for us, if we have it */
+		/* Here we deal with all RDP specific parameters */
 		if ((type == PAM_TYPE_RDP_USER) && (global_rdp_user != NULL)) {
 			return global_rdp_user;
 		}
