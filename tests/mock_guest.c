@@ -68,7 +68,6 @@ void _exit (int exitcode)
 
 #define BUFFER_SIZE  512
 
-/*Borrowed this code form socket-sucker.c in lightdm-remote-session-freerdp2*/
 int
 socket_sucker ()
 {
