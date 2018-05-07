@@ -1,4 +1,4 @@
-libpam-freerdp2 (1.0.2-0) UNRELEASED; urgency=medium
+libpam-freerdp2 (2.0.0-0) unstable; urgency=medium
 
   * Continue libpam-freerdp under a slightly new name and make things
     work and build against freerdp2-dev.

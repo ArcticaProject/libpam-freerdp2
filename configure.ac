@@ -1,4 +1,4 @@
-AC_INIT([libpam-freerdp2], [1.0.1])
+AC_INIT([libpam-freerdp2], [2.0.0])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIRS([m4])
 
