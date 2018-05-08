@@ -1,0 +1,5 @@
+# CDBS needs autoreconf.mk, shipped in dh-autoreconf package
+source: useless-autoreconf-build-depends dh-autoreconf
+
+# get-orig-source targets are really helpful, so we keep them
+source: debian-rules-contains-unnecessary-get-orig-source-target

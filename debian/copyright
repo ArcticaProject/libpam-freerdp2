@@ -1,10 +1,84 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: libpam-freerdp
-Source: http://launchpad.net/libpam-freerdp
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: libpam-freerdp2
+Upstream-Contact: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+Source: https://github.com/ArcticaProject/libpam-freerdp2/
 
-Files: *
+Files: ChangeLog
+ Makefile.am
+ Makefile.am.coverage
+ NEWS
+ README.md
+ configure.ac
+ debian/changelog
+ debian/compat
+ debian/control
+ debian/libpam-freerdp2-dev.install
+ debian/libpam-freerdp2.install
+ debian/patches/README
+ debian/rules
+ debian/source/format
+ debian/upstream/signing-key.asc
+ debian/watch
+ m4/gcov.m4
+ src/Makefile.am
+ src/auth-check-path.c
+ src/auth-check-path.h
+ tests/Makefile.am
+Copyright: 2012, Canonical Ltd.
+  2012-2013, Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+  2018, Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+License: GPL-3
+Comment:
+ Assuming license from COPYING file.
+ .
+ Assuming copyright holdership from the majority
+ of other code files.
+
+Files: src/freerdp2-auth-check.c
+ src/pam-freerdp2-children.c
+ src/pam-freerdp2-children.h
+ src/pam-freerdp2.c
+ tests/test-freerdp2-auth.c
 Copyright: 2012, Canonical Ltd.
 License: GPL-3
+
+Files: tests/mock_guest.c
+ tests/mock_guest.h
+ tests/mock_pam.c
+ tests/test-freerdp2-wrapper.cc
+Copyright: 2012, Canonical Ltd.
+License: GPL-3
+Comment:
+ Assuming license from COPYING file.
+
+Files: AUTHORS
+Copyright: 2012, Canonical Ltd.
+License: GPL-3
+Comment:
+ Assuming license from COPYING file.
+ .
+ Assuming copyright holdership from the majority
+ of other code files.
+
+Files: include/pam-freerdp2.h
+Copyright: 2012, Canonical Ltd.
+  2012-2013, Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+License: GPL-3
+
+Files: src/pam-freerdp2-private.h
+Copyright: 2018, Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+License: GPL-3
+
+Files: tests/mock_pam.h
+Copyright: 2012, Canonical Ltd.
+  2012-2013, Mike Gabriel <mike.gabriel@das-netzwerkteam.de>.
+License: GPL-3
+Comment:
+ Assuming license from COPYING file.
+
+Files: m4/gtest.m4
+Copyright: 2012, Canonical, Ltd.
+License: Expat
 
 Files: debian/*
 Copyright: 2012, Canonical Ltd.
@@ -26,3 +100,23 @@ License: GPL-3
  .
  On Debian systems, the complete text of the GNU General
  Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
+
+License: Expat
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ .
+ The above copyright notice and this permission notice (including the next
+ paragraph) shall be included in all copies or substantial portions of the
+ Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.

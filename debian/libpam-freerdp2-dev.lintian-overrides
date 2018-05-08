@@ -1,0 +1,2 @@
+# the -dev package is indeed a libdevel package, exposing some public API macros
+libpam-freerdp2-dev: wrong-section-according-to-package-name libpam-freerdp2-dev => admin

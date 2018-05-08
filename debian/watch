@@ -1,0 +1,3 @@
+version=3
+opts=pgpsigurlmangle=s/$/.asc/ \
+https://releases.arctica-project.org/source/libpam-freerdp2/libpam-freerdp2-(.+)\.tar\.gz

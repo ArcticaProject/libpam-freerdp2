@@ -1,5 +1,5 @@
 Source: libpam-freerdp2
-Section: misc
+Section: admin
 Priority: optional
 Maintainer: Artica Project <devs@lists.arctica-project.org>
 Uploaders:
@@ -14,7 +14,7 @@ Build-Depends: cdbs (>= 0.4.93~),
                libpam0g-dev,
                pkg-config,
 Standards-Version: 4.1.4
-Homepage: http://github.com/ArcticaProject/libpam-freerdp2
+Homepage: https://github.com/ArcticaProject/libpam-freerdp2
 Vcs-Git: https://github.com/ArcticaProject/libpam-freerdp2/
 Vcs-Browser: https://github.com/ArcticaProject/libpam-freerdp2/
 
@@ -29,6 +29,7 @@ Description: PAM Module to auth against an RDP server using FreeRDPv2
  Most useful with the pam-temp-account module.
 
 Package: libpam-freerdp2-dev
+Section: libdevel
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
