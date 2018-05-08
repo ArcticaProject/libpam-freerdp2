@@ -26,7 +26,9 @@ Depends: ${shlibs:Depends},
 Description: PAM Module to auth against an RDP server using FreeRDPv2
  Auth and session PAM module that uses FreeRDPv2 to authenticate against
  an RDP server as the remote host and user. Local account required.
- Most useful with the pam-temp-account module.
+ .
+ This PAM module is intended for facilitating Remote Logon into RDP
+ servers using LightDM's Arctica Greeter.
 
 Package: libpam-freerdp2-dev
 Section: libdevel
@@ -36,6 +38,8 @@ Depends: ${shlibs:Depends},
 Description: PAM Module to auth against an RDP server using FreeRDPv2 (development files)
  Auth and session PAM module that uses FreeRDPv2 to authenticate against
  an RDP server as the remote host and user. Local account required.
- Most useful with the pam-temp-account module.
+ .
+ This PAM module is intended for facilitating Remote Logon into RDP
+ servers using LightDM's Arctica Greeter.
  .
  This package contains the pam_freerdp2.so header files.
