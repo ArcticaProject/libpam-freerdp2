@@ -11,6 +11,7 @@
 #define __MOCK_PAM_H__
 
 #define LIBPAM_COMPILE
+#include <security/_pam_types.h>
 #include <security/pam_modules.h>
 #include <security/pam_modutil.h>
 #include <security/pam_appl.h>
