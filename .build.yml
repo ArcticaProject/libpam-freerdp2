@@ -73,10 +73,11 @@ build_scripts:
   -     fi
   - elif [ -e ./configure.ac ]; then
   -     autoreconf -vfi
-  -     scan-build $CHECKERS ./configure --prefix=/usr --enable-gtk-doc --enable-compile-warnings=maximum
+  -     scan-build $CHECKERS ./configure --prefix=/usr --enable-gtk-doc --enable-compile-warnings=maximum || true
   - else
   -     exit 1
   - fi
+  - cat config.log
   -
   - if [ $CPU_COUNT -gt 1 ]; then
   -     if [ ${DISTRO_NAME} == "debian" ];then
