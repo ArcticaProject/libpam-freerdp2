@@ -27,22 +27,23 @@ int fake_conv (int __attribute__((unused)) num_msg,
 	struct pam_response *response = NULL;
 	response = malloc (sizeof (struct pam_response));
 
-	if (response == NULL)
+	if (response == NULL) {
 		return PAM_BUF_ERR;
+	}
 
 	response->resp_retcode = 0;
 
-	if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_GUESTLOGIN) == 0)
+	if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_GUESTLOGIN) == 0) {
 		response->resp = strdup ("guest"); /* IMPORTANT: this needs to be in /etc/passwd */
-	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_USER) == 0)
+	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_USER) == 0) {
 		response->resp = strdup ("ruser");
-	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_HOST) == 0)
+	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_HOST) == 0) {
 		response->resp = strdup ("protocol://rhost/dummy");
-	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_PASSWORD) == 0)
+	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_PASSWORD) == 0) {
 		response->resp = strdup ("password");
-	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_DOMAIN) == 0)
+	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_DOMAIN) == 0) {
 		response->resp = strdup ("domain");
-	else {
+	} else {
 		free(response);
 		return PAM_SYMBOL_ERR; /* leaks... */
 	}
@@ -65,17 +66,17 @@ int fake_conv_empty_password (int __attribute__((unused)) num_msg,
 
 	response->resp_retcode = 0;
 
-	if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_GUESTLOGIN) == 0)
+	if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_GUESTLOGIN) == 0) {
 		response->resp = strdup ("guest"); /* IMPORTANT: this needs to be in /etc/passwd */
-	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_USER) == 0)
+	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_USER) == 0) {
 		response->resp = strdup ("ruser");
-	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_HOST) == 0)
+	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_HOST) == 0) {
 		response->resp = strdup ("protocol://rhost/dummy");
-	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_PASSWORD) == 0)
+	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_PASSWORD) == 0) {
 		response->resp = strdup ("");
-	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_DOMAIN) == 0)
+	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_DOMAIN) == 0) {
 		response->resp = strdup ("domain");
-	else {
+	} else {
 		free(response);
 		return PAM_SYMBOL_ERR; /* leaks... */
 	}
@@ -117,20 +118,22 @@ int PAM_NONNULL((1)) pam_get_item (const pam_handle_t *pamh, int type, const voi
 	if (pamh == NULL)
 		return PAM_SYSTEM_ERR;
 
-	if (type == PAM_CONV)
+	if (type == PAM_CONV) {
 		*value = pamh->conv;
-	else  if (pamh->item[type] != NULL)
+	} else  if (pamh->item[type] != NULL) {
 		*value = pamh->item[type];
-	else
+	} else {
 		*value = NULL; /* will result in a prompt conversation */
+	}
 
 	return PAM_SUCCESS;
 }
 
 int PAM_NONNULL((1)) pam_set_item (pam_handle_t *pamh, int type, const void *value)
 {
-	if (pamh == NULL)
+	if (pamh == NULL) {
 		return PAM_SYSTEM_ERR;
+	}
 
 	void **slot, *tmp;
 	size_t nsize, osize;
@@ -138,10 +141,12 @@ int PAM_NONNULL((1)) pam_set_item (pam_handle_t *pamh, int type, const void *val
 	slot = &pamh->item[type];
 	osize = nsize = 0;
 
-	if (*slot != NULL)
+	if (*slot != NULL) {
 		osize = strlen((const char *)*slot) + 1;
-	if (value != NULL)
+	}
+	if (value != NULL) {
 		nsize = strlen((const char *)value) + 1;
+	}
 
 	if (*slot != NULL) {
 		memset(*slot, 0xd0, osize);
@@ -149,8 +154,9 @@ int PAM_NONNULL((1)) pam_set_item (pam_handle_t *pamh, int type, const void *val
 	}
 
 	if (value != NULL) {
-		if ((tmp = malloc(nsize)) == NULL)
+		if ((tmp = malloc(nsize)) == NULL) {
 			return PAM_BUF_ERR;
+		}
 		memcpy(tmp, value, nsize);
 	} else {
 		tmp = NULL;
