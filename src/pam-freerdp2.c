@@ -240,7 +240,7 @@ get_item (pam_handle_t * pamh, int type)
 /* Authenticate.  We need to make sure we have a user account, that
    there are remote accounts and then verify them with FreeRDP */
 PAM_EXTERN int
-pam_sm_authenticate (pam_handle_t *pamh, int flags, int argc, const char **argv)
+pam_sm_authenticate (pam_handle_t *pamh, int __attribute__((unused)) flags, int __attribute__((unused)) argc, const char __attribute__((unused)) **argv)
 {
 	char * username = NULL;
 	char * password = NULL;
@@ -305,7 +305,7 @@ pid_t session_pid = 0;
    give the credentials to the session itself so that it can startup the
    xfreerdp viewer for the login */
 PAM_EXTERN int
-pam_sm_open_session (pam_handle_t *pamh, int flags, int argc, const char ** argv)
+pam_sm_open_session (pam_handle_t *pamh, int __attribute__((unused)) flags, int __attribute__((unused)) argc, const char __attribute__((unused)) **argv)
 {
 	char * username = NULL;
 	char * password = NULL;
@@ -372,7 +372,7 @@ done:
 /* Close Session.  Make sure our little guy has died so he doesn't become
    a zombie and eat things. */
 PAM_EXTERN int
-pam_sm_close_session (pam_handle_t *pamh, int flags, int argc, const char **argv)
+pam_sm_close_session (pam_handle_t *pamh, int __attribute__((unused)) flags, int __attribute__((unused)) argc, const char __attribute__((unused)) **argv)
 {
 	if (session_pid == 0) {
 		return PAM_IGNORE;
@@ -452,7 +452,7 @@ unpriveleged_kill (struct passwd * pwdent)
 /* LightDM likes to have this function around, but we don't need it as we
    don't have a token hanging around. */
 PAM_EXTERN int
-pam_sm_setcred (pam_handle_t *pamh, int flags, int argc, const char ** argv)
+pam_sm_setcred (pam_handle_t __attribute__((unused)) *pamh, int __attribute__((unused)) flags, int __attribute__((unused)) argc, const char __attribute__((unused)) **argv)
 {
 	return PAM_SUCCESS;
 }
