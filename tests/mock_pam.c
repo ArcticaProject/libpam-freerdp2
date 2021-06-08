@@ -42,8 +42,10 @@ int fake_conv (int __attribute__((unused)) num_msg,
 		response->resp = strdup ("password");
 	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_DOMAIN) == 0)
 		response->resp = strdup ("domain");
-	else
+	else {
+		free(response);
 		return PAM_SYMBOL_ERR; /* leaks... */
+	}
 
 	*resp = response;
 
@@ -73,8 +75,10 @@ int fake_conv_empty_password (int __attribute__((unused)) num_msg,
 		response->resp = strdup ("");
 	else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_DOMAIN) == 0)
 		response->resp = strdup ("domain");
-	else
+	else {
+		free(response);
 		return PAM_SYMBOL_ERR; /* leaks... */
+	}
 
 	*resp = response;
 
