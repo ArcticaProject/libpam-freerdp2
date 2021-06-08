@@ -24,31 +24,31 @@
 
 
 BOOL
-auth_context_new (freerdp * instance, rdpContext * context)
+auth_context_new (freerdp __attribute__((unused)) *instance, rdpContext __attribute__((unused)) *context)
 {
 	return TRUE;
 }
 
 void
-auth_context_free (freerdp * instance, rdpContext * context)
+auth_context_free (freerdp __attribute__((unused)) *instance, rdpContext __attribute__((unused)) *context)
 {
 	return;
 }
 
 BOOL
-auth_pre_connect (freerdp * instance)
+auth_pre_connect (freerdp __attribute__((unused)) *instance)
 {
 	return TRUE;
 }
 
 BOOL
-auth_post_connect (freerdp * instance)
+auth_post_connect (freerdp __attribute__((unused)) *instance)
 {
 	return TRUE;
 }
 
 int
-main (int argc, char * argv[])
+main (int argc, char *argv[])
 {
 	char password[512];
 	if (argc != 4) {

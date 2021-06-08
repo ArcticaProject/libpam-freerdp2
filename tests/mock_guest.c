@@ -22,39 +22,44 @@ static struct passwd guest = { "guest",
 							   "/tmp",
 							   "/bin/true" };
 struct passwd *
-getpwnam (const char *username)
+getpwnam (const char __attribute__((unused)) *username)
 { return &guest; }
 
 int
-setgroups(size_t size, const gid_t *list)
+setgroups(size_t __attribute__((unused)) size,
+          const gid_t __attribute__((unused)) *list)
 {
 	errno = EPERM;
 	return -1;
 }
 
 int
-setgid(gid_t gid)
+setgid(gid_t __attribute__((unused)) gid)
 { return 0; }
 
 int
-setuid(uid_t uid)
+setuid(uid_t __attribute__((unused)) uid)
 { return 0; }
 
 int
-setegid(gid_t gid)
+setegid(gid_t __attribute__((unused)) gid)
 { return 0; }
 
 int
-seteuid(uid_t uid)
+seteuid(uid_t __attribute__((unused)) uid)
 { return 0; }
 
-int chmod(const char *path, mode_t mode)
+int chmod(const char __attribute__((unused)) *path,
+          mode_t __attribute__((unused)) mode)
 { return 0; }
 
-int chown(const char *path, uid_t owner, gid_t group)
+int chown(const char __attribute__((unused)) *path,
+          uid_t __attribute__((unused)) owner,
+          gid_t __attribute__((unused)) group)
 { return 0; }
 
-int execvp(const char *file, char *const argv[])
+int execvp(const char __attribute__((unused)) *file,
+           char __attribute__((unused)) *const argv[])
 {
 	return 0;
 }
@@ -84,7 +89,7 @@ socket_sucker ()
 
 	serv_addr.sun_family = AF_UNIX;
 
-	int printsize = snprintf(serv_addr.sun_path, sizeof(serv_addr.sun_path) - 1, "%s/%s", home, ".freerdp2-socket");
+	unsigned long int printsize = (unsigned long int)snprintf(serv_addr.sun_path, sizeof(serv_addr.sun_path) - 1, "%s/%s", home, ".freerdp2-socket");
 	if (printsize > sizeof(serv_addr.sun_path) - 1 || printsize < 0) {
 		return -1;
 	}
