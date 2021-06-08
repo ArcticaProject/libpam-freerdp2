@@ -44,6 +44,7 @@ freerdp2_auth_check_SOURCES =					\
         $(NULL)
 
 freerdp2_auth_check_CFLAGS =					\
+        -Wall -Werror						\
         $(FREERDP2_CFLAGS)					\
         $(WINPR2_CFLAGS)					\
         $(COVERAGE_CFLAGS)					\
