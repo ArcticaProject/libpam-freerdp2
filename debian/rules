@@ -4,28 +4,14 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/rules/autoreconf.mk
-include /usr/share/cdbs/1/class/autotools.mk
-include /usr/share/cdbs/1/rules/utils.mk
+%:
+	dh $@
 
-DEB_MAKE_CHECK_TARGET = check
-
-#pre-build::
-#	cp README.md README
-#
-#cleanbuilddir::
-#	rm -f README
-
-# Remove .a and .la files from /lib/security
-remove-cruft::
-	find $(DEB_DESTDIR)/lib/security -type f \
-	        \( -name '*.a' -o -name '*.la' \) \
-	            -exec rm '{}' +
-
-common-install-indep:: remove-cruft
-common-install-arch:: remove-cruft
-common-binary-post-install-arch:: list-missing
+override_dh_install:
+	dh_install
+	find debian/tmp/lib/security -type f \
+	    \( -name '*.a' -o -name '*.la' \) \
+	    -exec rm '{}' +
 
 get-orig-source:
 	uscan --noconf --force-download --rename --download-current-version --destdir=..
