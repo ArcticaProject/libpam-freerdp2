@@ -87,8 +87,6 @@ test_freerdp_wrapper_SOURCES =					\
 test_freerdp_wrapper_LDADD =					\
         libgtest.a libgtest_main.a				\
         ${top_srcdir}/src/pam_freerdp.la			\
-        $(FREERDP_LIBS)						\
-        $(WINPR_LIBS)						\
         $(NULL)
 
 test_freerdp_wrapper_CPPFLAGS =					\
@@ -96,22 +94,16 @@ test_freerdp_wrapper_CPPFLAGS =					\
         -I${top_srcdir}/include					\
         -I${top_srcdir}/src					\
         $(GTEST_CPPFLAGS)					\
-        $(FREERDP_CPPFLAGS)					\
-        $(WINPR_CPPFLAGS)					\
         $(NULL)
 
 test_freerdp_wrapper_CXXFLAGS =					\
         $(AM_CXXFLAGS)						\
         -DAUTH_CHECK="\"$(abs_builddir)/test-freerdp-auth\""	\
         $(GTEST_CXXFLAGS)					\
-        $(FREERDP_CXXFLAGS)					\
-        $(WINPR_CXXFLAGS)					\
         $(NULL)
 
 test_freerdp_wrapper_LDFLAGS =					\
         $(GTEST_LDFLAGS)					\
-        $(FREERDP_LDFLAGS)					\
-        $(WINPR_LDFLAGS)					\
         -pthread						\
         $(NULL)
 
