@@ -3,7 +3,7 @@
 ##########################################################
 requires:
   archlinux:
-    # Useful URL: https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=libpam-freerdp2
+    # Useful URL: https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=libpam-freerdp
     - clang
     - gcc
     - git
@@ -13,7 +13,7 @@ requires:
     # FIXME: add missing build-dependencies
 
   debian:
-    # Useful URL: https://salsa.debian.org/debian-remote-team/libpam-freerdp2
+    # Useful URL: https://salsa.debian.org/debian-remote-team/libpam-freerdp
     - autopoint
     - clang
     - clang-tools
@@ -22,10 +22,13 @@ requires:
     - git
     - make
     - libtool
-    - freerdp2-dev
     - libgtest-dev
     - libpam0g-dev
     - pkg-config
+    testing:
+        - freerdp3-dev
+    stable:
+        - freerdp2-dev
 
   ubuntu:
     - autopoint
@@ -35,7 +38,7 @@ requires:
     - git
     - make
     - libtool
-    - freerdp2-dev
+    - freerdp3-dev
     - libgtest-dev
     - libpam0g-dev
     - pkg-config
