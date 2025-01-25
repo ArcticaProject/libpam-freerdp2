@@ -43,20 +43,38 @@ freerdp_auth_check_SOURCES =					\
         freerdp-auth-check.c					\
         $(NULL)
 
+if HAVE_FREERDP3
 freerdp_auth_check_CFLAGS =					\
         -Wall -Werror						\
-        $(FREERDP_CFLAGS)					\
-        $(WINPR_CFLAGS)						\
+        $(FREERDP3_CFLAGS)					\
+        $(WINPR3_CFLAGS)					\
         $(COVERAGE_CFLAGS)					\
         $(NULL)
-
 freerdp_auth_check_LDADD =					\
-        $(FREERDP_LIBS)						\
-        $(WINPR_LIBS)						\
+        $(FREERDP3_LIBS)					\
+        $(WINPR3_LIBS)						\
         $(NULL)
 
 freerdp_auth_check_LDFLAGS =					\
-        $(FREERDP_LDFLAGS)					\
-        $(WINPR_LDFLAGS)					\
+        $(FREERDP3_LDFLAGS)					\
+        $(WINPR3_LDFLAGS)					\
         $(COVERAGE_LDFLAGS)					\
         $(NULL)
+else
+freerdp_auth_check_CFLAGS =					\
+        -Wall -Werror						\
+        $(FREERDP2_CFLAGS)					\
+        $(WINPR2_CFLAGS)					\
+        $(COVERAGE_CFLAGS)					\
+        $(NULL)
+freerdp_auth_check_LDADD =					\
+        $(FREERDP2_LIBS)					\
+        $(WINPR2_LIBS)						\
+        $(NULL)
+
+freerdp_auth_check_LDFLAGS =					\
+        $(FREERDP2_LDFLAGS)					\
+        $(WINPR2_LDFLAGS)					\
+        $(COVERAGE_LDFLAGS)					\
+        $(NULL)
+endif
