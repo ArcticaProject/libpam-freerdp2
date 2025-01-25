@@ -89,7 +89,7 @@ socket_sucker ()
 
 	serv_addr.sun_family = AF_UNIX;
 
-	unsigned long int printsize = (unsigned long int)snprintf(serv_addr.sun_path, sizeof(serv_addr.sun_path) - 1, "%s/%s", home, ".freerdp2-socket");
+	unsigned long int printsize = (unsigned long int)snprintf(serv_addr.sun_path, sizeof(serv_addr.sun_path) - 1, "%s/%s", home, ".freerdp-socket");
 	if (printsize > sizeof(serv_addr.sun_path) - 1 || printsize < 0) {
 		return -1;
 	}

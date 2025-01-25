@@ -1,6 +1,5 @@
 /*
- * Copyright © 2012-2013 Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
- * Copyright © 2012 Canonical Ltd.
+ * Copyright © 2018 Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 3, as
@@ -15,15 +14,19 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+ * Author libpam-freerdp (where we forked from): Ted Gould <ted@canonical.com>
  */
 
-#ifndef _PAM_FREERDP2_H_
-#define _PAM_FREERDP2_H_
+#ifndef _PAM_FREERDP_PRIVATE_H_
+#define _PAM_FREERDP_PRIVATE_H_
 
-#define PAM_FREERDP2_PROMPT_GUESTLOGIN		"login:"
-#define PAM_FREERDP2_PROMPT_USER		"remote login:"
-#define PAM_FREERDP2_PROMPT_HOST		"remote host:"
-#define PAM_FREERDP2_PROMPT_DOMAIN		"remote domain:"
-#define PAM_FREERDP2_PROMPT_PASSWORD		"password:"
+PAM_EXTERN int
+pam_sm_authenticate (pam_handle_t *pamh, int flags, int argc, const char **argv);
+PAM_EXTERN int
+pam_sm_open_session (pam_handle_t *pamh, int flags, int argc, const char ** argv);
+PAM_EXTERN int
+pam_sm_close_session (pam_handle_t *pamh, int flags, int argc, const char **argv);
+PAM_EXTERN int
+pam_sm_setcred (pam_handle_t *pamh, int flags, int argc, const char ** argv);
 
-#endif //_PAM_FREERDP2_H_
+#endif //_PAM_FREERDP_PRIVATE_H_

@@ -1,4 +1,4 @@
-AC_INIT([libpam-freerdp2], [2.0.0])
+AC_INIT([libpam-freerdp], [2.0.0])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIRS([m4])
 
@@ -26,8 +26,44 @@ fi
 # FreeRDP
 ###########################
 
-PKG_CHECK_MODULES(FREERDP2, freerdp2)
-PKG_CHECK_MODULES(WINPR2, winpr2)
+dnl GTK version selection.
+AC_MSG_CHECKING([whether to build against FreeRDPv3])
+AC_ARG_ENABLE([freerdp3],
+              [AS_HELP_STRING([--enable-freerdp3],
+                              [Build against FreeRDPv3])],
+              [enable_freerdp3=$enableval],
+              [enable_freerdp3=no])
+AC_MSG_RESULT([$enable_freerdp3])
+with_freerdp3=$enable_freerdp3
+
+AS_IF([test "x$enable_freerdp3" != 'xno'],
+      [PKG_CHECK_MODULES([FREERDP],
+                         [freerdp3],
+                         [freerdp3_modules=yes],
+                         [freerdp3_modules=no])
+       PKG_CHECK_MODULES([WINPR],
+                         [winpr3])
+       AC_MSG_CHECKING([for FreeRDPv3 libraries])
+       AC_MSG_RESULT([$freerdp3_modules])
+       AS_IF([test "x$freerdp3_modules" = 'xno'],
+             [AC_MSG_ERROR([requested FreeRDPv3, but not found])],
+             [with_freerdp3=yes])])
+AS_IF([test "x$with_freerdp3" = 'xno'],
+      [PKG_CHECK_MODULES([FREERDP],
+                         [freerdp2],
+                         [freerdp2_modules=yes],
+                         [freerdp2_modules=no])
+       PKG_CHECK_MODULES([WINPR],
+                         [winpr2])
+       AC_MSG_CHECKING([for FreeRDPv2 libraries])
+       AC_MSG_RESULT([$freerdp2_modules])
+       AS_IF([test "x$freerdp2_modules" = 'xno'],
+             [AC_MSG_ERROR([requested FreeRDPv2, but not found])])])
+AC_SUBST([FREERDP_CFLAGS])
+AC_SUBST([FREERDP_LIBS])
+AC_SUBST([WINPR_CFLAGS])
+AC_SUBST([WINPR_LIBS])
+AM_CONDITIONAL([HAVE_FREERDP3], [test "x$with_freerdp3" != 'xno'])
 
 ###########################
 # PAM Module dir

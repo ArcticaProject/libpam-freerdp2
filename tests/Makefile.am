@@ -5,16 +5,16 @@ DISTCLEANFILES =
 EXTRA_DIST =
 
 TESTS =								\
-        test-freerdp2-wrapper					\
+        test-freerdp-wrapper					\
         $(NULL)
 
 check_PROGRAMS =						\
-        test-freerdp2-auth					\
+        test-freerdp-auth					\
         $(TESTS)						\
         $(NULL)
 
 CLEANFILES +=							\
-        test-freerdp2-auth					\
+        test-freerdp-auth					\
         $(TESTS)						\
         $(NULL)
 
@@ -76,42 +76,42 @@ libgtest_main_a_CXXFLAGS =					\
 # Wrapper
 ##########################
 
-test_freerdp2_wrapper: test-freerdp2-auth
+test_freerdp_wrapper: test-freerdp-auth
 
-test_freerdp2_wrapper_SOURCES =					\
+test_freerdp_wrapper_SOURCES =					\
         mock_pam.c mock_pam.h					\
         mock_guest.c mock_guest.h				\
-        test-freerdp2-wrapper.cc				\
+        test-freerdp-wrapper.cc					\
         $(NULL)
 
-test_freerdp2_wrapper_LDADD =					\
+test_freerdp_wrapper_LDADD =					\
         libgtest.a libgtest_main.a				\
-        ${top_srcdir}/src/pam_freerdp2.la			\
-        $(FREERDP2_LIBS)					\
-        $(WINPR2_LIBS)						\
+        ${top_srcdir}/src/pam_freerdp.la			\
+        $(FREERDP_LIBS)						\
+        $(WINPR_LIBS)						\
         $(NULL)
 
-test_freerdp2_wrapper_CPPFLAGS =				\
+test_freerdp_wrapper_CPPFLAGS =					\
         $(AM_CPPFLAGS)						\
         -I${top_srcdir}/include					\
         -I${top_srcdir}/src					\
         $(GTEST_CPPFLAGS)					\
-        $(FREERDP2_CPPFLAGS)					\
-        $(WINPR2_CPPFLAGS)					\
+        $(FREERDP_CPPFLAGS)					\
+        $(WINPR_CPPFLAGS)					\
         $(NULL)
 
-test_freerdp2_wrapper_CXXFLAGS =				\
+test_freerdp_wrapper_CXXFLAGS =					\
         $(AM_CXXFLAGS)						\
-        -DAUTH_CHECK="\"$(abs_builddir)/test-freerdp2-auth\""	\
+        -DAUTH_CHECK="\"$(abs_builddir)/test-freerdp-auth\""	\
         $(GTEST_CXXFLAGS)					\
-        $(FREERDP2_CXXFLAGS)					\
-        $(WINPR2_CXXFLAGS)					\
+        $(FREERDP_CXXFLAGS)					\
+        $(WINPR_CXXFLAGS)					\
         $(NULL)
 
-test_freerdp2_wrapper_LDFLAGS =					\
+test_freerdp_wrapper_LDFLAGS =					\
         $(GTEST_LDFLAGS)					\
-        $(FREERDP2_LDFLAGS)					\
-        $(WINPR2_LDFLAGS)					\
+        $(FREERDP_LDFLAGS)					\
+        $(WINPR_LDFLAGS)					\
         -pthread						\
         $(NULL)
 
@@ -119,6 +119,6 @@ test_freerdp2_wrapper_LDFLAGS =					\
 # Auth tool
 ##########################
 
-test_freerdp2_auth_SOURCES =					\
-        test-freerdp2-auth.c					\
+test_freerdp_auth_SOURCES =					\
+        test-freerdp-auth.c					\
         $(NULL)

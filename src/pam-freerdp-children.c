@@ -34,7 +34,7 @@
 #include <security/pam_modutil.h>
 #include <security/pam_appl.h>
 
-#include "pam-freerdp2-children.h"
+#include "pam-freerdp-children.h"
 #include "auth-check-path.h"
 
 void
@@ -172,7 +172,7 @@ session_socket_handler (struct passwd * pwdent, int readypipe, const char * ruse
 	memset(&socket_addr, 0, sizeof(struct sockaddr_un));
 	socket_addr.sun_family = AF_UNIX;
 	strncpy(socket_addr.sun_path, pwdent->pw_dir, sizeof(socket_addr.sun_path) - 1);
-	strncpy(socket_addr.sun_path + strlen(pwdent->pw_dir), "/.freerdp2-socket", (sizeof(socket_addr.sun_path) - strlen(pwdent->pw_dir)) - 1);
+	strncpy(socket_addr.sun_path + strlen(pwdent->pw_dir), "/.freerdp-socket", (sizeof(socket_addr.sun_path) - strlen(pwdent->pw_dir)) - 1);
 
 	/* We bind the socket before forking so that we ensure that
 	   there isn't a race condition to get to it.  Things will block

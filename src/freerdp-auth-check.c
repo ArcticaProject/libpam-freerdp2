@@ -52,7 +52,7 @@ main (int argc, char *argv[])
 {
 	char password[512];
 	if (argc != 4) {
-		printf("Usage: echo <passwd> | freerdp2-auth-check <host>[:<port>] <user> <domain>\n\n");
+		printf("Usage: echo <passwd> | freerdp-auth-check <host>[:<port>] <user> <domain>\n\n");
 		printf("ERROR: Incorrect number of parameters.\n\n");
 		return -1;
 	}
@@ -91,15 +91,26 @@ main (int argc, char *argv[])
 		/* We've got a port to deal with */
 		colonloc[0] = '\0';
 		colonloc++;
-
+#if FREERDP_VERSION_MAJOR >= 3
+		freerdp_settings_set_uint32(instance->context->settings, FreeRDP_ServerPort, strtoul(colonloc, NULL, 10));
+#else
 		instance->settings->ServerPort = strtoul(colonloc, NULL, 10);
+#endif
 	}
 
+#if FREERDP_VERSION_MAJOR >= 3
+	freerdp_settings_set_bool(instance->context->settings, FreeRDP_AuthenticationOnly, TRUE);
+	freerdp_settings_set_string(instance->context->settings, FreeRDP_ServerHostname, argv[1]);
+	freerdp_settings_set_string(instance->context->settings, FreeRDP_Username, argv[2]);
+	freerdp_settings_set_string(instance->context->settings, FreeRDP_Domain, argv[3]);
+	freerdp_settings_set_string(instance->context->settings, FreeRDP_Password, password);
+#else
 	instance->settings->AuthenticationOnly = TRUE;
 	instance->settings->ServerHostname = argv[1];
 	instance->settings->Username = argv[2];
 	instance->settings->Domain = argv[3];
 	instance->settings->Password = password;
+#endif
 
 	BOOL connection_successful;
 	connection_successful = freerdp_connect(instance);
@@ -107,10 +118,17 @@ main (int argc, char *argv[])
 
 	memset(password, 0, sizeof(password));
 	munlock(password, sizeof(password));
+#if FREERDP_VERSION_MAJOR >= 3
+	freerdp_settings_set_string(instance->context->settings, FreeRDP_Password, NULL);
+	freerdp_settings_set_string(instance->context->settings, FreeRDP_ServerHostname, NULL);
+	freerdp_settings_set_string(instance->context->settings, FreeRDP_Username, NULL);
+	freerdp_settings_set_string(instance->context->settings, FreeRDP_Domain, NULL);
+#else
 	instance->settings->Password = NULL;
 	instance->settings->ServerHostname = NULL;
 	instance->settings->Username = NULL;
 	instance->settings->Domain = NULL;
+#endif
 
 	int retval = 0;
 	if (!connection_successful) {

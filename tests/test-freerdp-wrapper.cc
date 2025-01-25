@@ -12,7 +12,7 @@ extern "C" {
 #include "mock_pam.h"
 #include "mock_guest.h"
 
-#include "pam-freerdp2-private.h"
+#include "pam-freerdp-private.h"
 
 	int freerdpclient_wrapper (int argc, char * argv[]);
 
@@ -43,13 +43,13 @@ namespace {
     virtual void SetUp() {
       // Code here will be called immediately after the constructor (right
       // before each test).
-		unlink("/tmp/.freerdp2-socket");
+		unlink("/tmp/.freerdp-socket");
     }
 
     virtual void TearDown() {
       // Code here will be called immediately after each test (right
       // before the destructor).
-		unlink("/tmp/.freerdp2-socket");
+		unlink("/tmp/.freerdp-socket");
     }
 
     // Objects declared here can be used by all tests in the test case for Foo.

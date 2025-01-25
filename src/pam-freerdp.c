@@ -36,9 +36,9 @@
 #include <security/pam_modutil.h>
 #include <security/pam_appl.h>
 
-#include "pam-freerdp2.h"
+#include "pam-freerdp.h"
 
-#include "pam-freerdp2-children.h"
+#include "pam-freerdp-children.h"
 #include "auth-check-path.h"
 
 static int unpriveleged_kill (struct passwd * pwdent);
@@ -93,20 +93,20 @@ get_item (pam_handle_t * pamh, int type)
 
 	switch (type) {
 	case PAM_USER:
-		message.msg = PAM_FREERDP2_PROMPT_GUESTLOGIN;
+		message.msg = PAM_FREERDP_PROMPT_GUESTLOGIN;
 		break;
 	case PAM_TYPE_RDP_USER:
-		message.msg = PAM_FREERDP2_PROMPT_USER;
+		message.msg = PAM_FREERDP_PROMPT_USER;
 		break;
 	case PAM_TYPE_RDP_SERVER:
-		message.msg = PAM_FREERDP2_PROMPT_HOST;
+		message.msg = PAM_FREERDP_PROMPT_HOST;
 		break;
 	case PAM_AUTHTOK:
-		message.msg = PAM_FREERDP2_PROMPT_PASSWORD;
+		message.msg = PAM_FREERDP_PROMPT_PASSWORD;
 		message.msg_style = PAM_PROMPT_ECHO_OFF;
 		break;
 	case PAM_TYPE_RDP_DOMAIN:
-		message.msg = PAM_FREERDP2_PROMPT_DOMAIN;
+		message.msg = PAM_FREERDP_PROMPT_DOMAIN;
 		break;
 	default:
 		return NULL;
@@ -460,7 +460,7 @@ pam_sm_setcred (pam_handle_t __attribute__((unused)) *pamh, int __attribute__((u
 #ifdef PAM_STATIC
 
 struct pam_module _pam_freerdp_modstruct = {
-     "pam_freerdp2",
+     "pam_freerdp",
      pam_sm_authenticate,
      pam_sm_setcred,
      NULL,

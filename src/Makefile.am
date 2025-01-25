@@ -1,62 +1,62 @@
 NULL =
 
 pamlibdir = $(PAMMODULEDIR)
-pamlib_LTLIBRARIES = pam_freerdp2.la
+pamlib_LTLIBRARIES = pam_freerdp.la
 
-pam_freerdp2_la_SOURCES = \
+pam_freerdp_la_SOURCES = \
         auth-check-path.c auth-check-path.h			\
-        pam-freerdp2.c						\
-        pam-freerdp2-children.c					\
+        pam-freerdp.c						\
+        pam-freerdp-children.c					\
         $(NULL)
 
-pam_freerdp2_la_LDFLAGS =					\
+pam_freerdp_la_LDFLAGS =					\
         -no-undefined						\
         -module							\
         -avoid-version						\
         $(COVERAGE_LDFLAGS)					\
         $(NULL)
 
-pam_freerdp2_la_CFLAGS =					\
+pam_freerdp_la_CFLAGS =						\
         -Wall -Werror						\
-        -DAUTH_CHECK="\"$(libexecdir)/freerdp2-auth-check\""	\
+        -DAUTH_CHECK="\"$(libexecdir)/freerdp-auth-check\""	\
         $(COVERAGE_CFLAGS)					\
         $(NULL)
 
-pam_freerdp2_la_CPPFLAGS =					\
+pam_freerdp_la_CPPFLAGS =					\
         -I$(top_srcdir)/include					\
         $(NULL)
 
-pam_freerdp2_la_LIBADD = \
+pam_freerdp_la_LIBADD = \
         -lpam							\
         $(NULL)
 
-pam_freerdp2includedir = $(includedir)/security/
-pam_freerdp2include_HEADERS =					\
-        $(top_srcdir)/include/pam-freerdp2.h			\
+pam_freerdpincludedir = $(includedir)/security/
+pam_freerdpinclude_HEADERS =					\
+        $(top_srcdir)/include/pam-freerdp.h			\
         $(NULL)
 
 libexec_PROGRAMS =						\
-        freerdp2-auth-check					\
+        freerdp-auth-check					\
         $(NULL)
 
-freerdp2_auth_check_SOURCES =					\
-        freerdp2-auth-check.c					\
+freerdp_auth_check_SOURCES =					\
+        freerdp-auth-check.c					\
         $(NULL)
 
-freerdp2_auth_check_CFLAGS =					\
+freerdp_auth_check_CFLAGS =					\
         -Wall -Werror						\
-        $(FREERDP2_CFLAGS)					\
-        $(WINPR2_CFLAGS)					\
+        $(FREERDP_CFLAGS)					\
+        $(WINPR_CFLAGS)						\
         $(COVERAGE_CFLAGS)					\
         $(NULL)
 
-freerdp2_auth_check_LDADD =					\
-        $(FREERDP2_LIBS)					\
-        $(WINPR2_LIBS)						\
+freerdp_auth_check_LDADD =					\
+        $(FREERDP_LIBS)						\
+        $(WINPR_LIBS)						\
         $(NULL)
 
-freerdp2_auth_check_LDFLAGS =					\
-        $(FREERDP2_LDFLAGS)					\
-        $(WINPR2_LDFLAGS)					\
+freerdp_auth_check_LDFLAGS =					\
+        $(FREERDP_LDFLAGS)					\
+        $(WINPR_LDFLAGS)					\
         $(COVERAGE_LDFLAGS)					\
         $(NULL)

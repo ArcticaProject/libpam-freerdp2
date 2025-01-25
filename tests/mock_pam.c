@@ -9,7 +9,7 @@
 #include <string.h>
 
 #include "mock_pam.h"
-#include "pam-freerdp2.h"
+#include "pam-freerdp.h"
 
 struct pam_handle {
 	void *item[PAM_NUM_ITEMS];
@@ -33,15 +33,15 @@ int fake_conv (int __attribute__((unused)) num_msg,
 
 	response->resp_retcode = 0;
 
-	if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_GUESTLOGIN) == 0) {
+	if (strcmp((*msg)->msg, PAM_FREERDP_PROMPT_GUESTLOGIN) == 0) {
 		response->resp = strdup ("guest"); /* IMPORTANT: this needs to be in /etc/passwd */
-	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_USER) == 0) {
+	} else if (strcmp((*msg)->msg, PAM_FREERDP_PROMPT_USER) == 0) {
 		response->resp = strdup ("ruser");
-	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_HOST) == 0) {
+	} else if (strcmp((*msg)->msg, PAM_FREERDP_PROMPT_HOST) == 0) {
 		response->resp = strdup ("protocol://rhost/dummy");
-	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_PASSWORD) == 0) {
+	} else if (strcmp((*msg)->msg, PAM_FREERDP_PROMPT_PASSWORD) == 0) {
 		response->resp = strdup ("password");
-	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_DOMAIN) == 0) {
+	} else if (strcmp((*msg)->msg, PAM_FREERDP_PROMPT_DOMAIN) == 0) {
 		response->resp = strdup ("domain");
 	} else {
 		free(response);
@@ -66,15 +66,15 @@ int fake_conv_empty_password (int __attribute__((unused)) num_msg,
 
 	response->resp_retcode = 0;
 
-	if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_GUESTLOGIN) == 0) {
+	if (strcmp((*msg)->msg, PAM_FREERDP_PROMPT_GUESTLOGIN) == 0) {
 		response->resp = strdup ("guest"); /* IMPORTANT: this needs to be in /etc/passwd */
-	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_USER) == 0) {
+	} else if (strcmp((*msg)->msg, PAM_FREERDP_PROMPT_USER) == 0) {
 		response->resp = strdup ("ruser");
-	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_HOST) == 0) {
+	} else if (strcmp((*msg)->msg, PAM_FREERDP_PROMPT_HOST) == 0) {
 		response->resp = strdup ("protocol://rhost/dummy");
-	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_PASSWORD) == 0) {
+	} else if (strcmp((*msg)->msg, PAM_FREERDP_PROMPT_PASSWORD) == 0) {
 		response->resp = strdup ("");
-	} else if (strcmp((*msg)->msg, PAM_FREERDP2_PROMPT_DOMAIN) == 0) {
+	} else if (strcmp((*msg)->msg, PAM_FREERDP_PROMPT_DOMAIN) == 0) {
 		response->resp = strdup ("domain");
 	} else {
 		free(response);
