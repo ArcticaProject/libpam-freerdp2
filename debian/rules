@@ -7,6 +7,11 @@ include /usr/share/dpkg/buildflags.mk
 %:
 	dh $@
 
+# Uncomment for building against freerdp2-dev explicitly if freerdp3-dev _and_
+# freerdp2-dev are installed.
+#override_dh_auto_configure:
+#	dh_auto_configure -- --with-freerdp2
+
 override_dh_install:
 	dh_install
 	find debian/tmp/lib/security -type f \
