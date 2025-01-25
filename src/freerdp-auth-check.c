@@ -18,6 +18,7 @@
 
 #include <freerdp/freerdp.h>
 #include <freerdp/channels/channels.h>
+#include <freerdp/version.h>
 #include <string.h>
 #include <sys/mman.h>
 #include <winpr/wlog.h>
