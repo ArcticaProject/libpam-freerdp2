@@ -1,4 +1,4 @@
-Source: libpam-freerdp2
+Source: libpam-freerdp
 Section: admin
 Priority: optional
 Maintainer: Artica Project <devs@lists.arctica-project.org>
@@ -7,37 +7,37 @@ Uploaders:
 Build-Depends: debhelper-compat (= 12),
                dpkg-dev (>= 1.16.1.1~),
                mate-common,
-               freerdp2-dev (>= 2~),
+               freerdp3-dev (>= 3~) | freerdp2-dev (>= 2~),
                libgtest-dev,
                libpam0g-dev,
                pkg-config,
-Standards-Version: 4.1.4
-Homepage: https://github.com/ArcticaProject/libpam-freerdp2
-Vcs-Git: https://github.com/ArcticaProject/libpam-freerdp2/
-Vcs-Browser: https://github.com/ArcticaProject/libpam-freerdp2/
+Standards-Version: 4.7.0
+Homepage: https://github.com/ArcticaProject/libpam-freerdp
+Vcs-Git: https://github.com/ArcticaProject/libpam-freerdp/
+Vcs-Browser: https://github.com/ArcticaProject/libpam-freerdp/
 
-Package: libpam-freerdp2
+Package: libpam-freerdp
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         freerdp2-x11,
-Description: PAM Module to auth against an RDP server using FreeRDPv2
- Auth and session PAM module that uses FreeRDPv2 to authenticate against
+         freerdp3-x11 | freerdp2-x11,
+Description: PAM Module to auth against an RDP server using FreeRDP
+ Auth and session PAM module that uses FreeRDP to authenticate against
  an RDP server as the remote host and user. Local account required.
  .
  This PAM module is intended for facilitating Remote Logon into RDP
  servers using LightDM's Arctica Greeter.
 
-Package: libpam-freerdp2-dev
+Package: libpam-freerdp-dev
 Section: libdevel
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-Description: PAM Module to auth against an RDP server using FreeRDPv2 (development files)
- Auth and session PAM module that uses FreeRDPv2 to authenticate against
+Description: PAM Module to auth against an RDP server using FreeRDP (development files)
+ Auth and session PAM module that uses FreeRDP to authenticate against
  an RDP server as the remote host and user. Local account required.
  .
  This PAM module is intended for facilitating Remote Logon into RDP
  servers using LightDM's Arctica Greeter.
  .
- This package contains the pam_freerdp2.so header files.
+ This package contains the pam_freerdp.so header files.
